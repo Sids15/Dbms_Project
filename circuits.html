@@ -1,0 +1,2324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>F1 Circuits 2024</title>
+  <style>
+
+:root {
+            --primary: #e10600;
+            --secondary: #1e1e1e;
+            --light: #f5f5f5;
+            --dark: #15151e;
+            --accent: #00a19b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        
+        
+        /* Header and Navigation */
+        header {
+            background-color: rgba(21, 21, 30, 0.9);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--light);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--dark);
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        
+        .dropdown-content a {
+            color: var(--light);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s ease;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #2a2a35;
+            color: var(--primary);
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .login-btn {
+            background-color: transparent;
+            color: var(--light);
+            border: 1px solid var(--primary);
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .login-btn:hover {
+            background-color: var(--primary);
+            color: var(--light);
+        }
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 2rem;
+    }
+
+    .circuit-row {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      background-color: white;
+      margin-bottom: 2rem;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.4s ease;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .circuit-row.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .circuit-img {
+      width: 50%;
+      height: auto;
+    }
+
+    .circuit-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .circuit-info {
+      width: 50%;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+    }
+
+    .circuit-info h2 {
+      color: #000;
+      margin-bottom: 0.5rem;
+    }
+
+    .circuit-info p {
+      margin: 0.3rem 0;
+      color: #333;
+    }
+
+    .description {
+      margin-top: 1rem;
+      color: #666;
+      font-style: italic;
+    }
+
+    .more-info {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease-in-out;
+      color: #444;
+      margin-top: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .more-info.expanded {
+      max-height: 500px;
+    }
+
+    .view-more-btn {
+      margin-top: 0.8rem;
+      background-color: #e10600;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background-color 0.3s;
+      align-self: flex-start;
+    }
+
+    .view-more-btn:hover {
+      background-color: #b20400;
+    }
+
+    /* Footer */
+    footer {
+            background-color: var(--dark);
+            color: var(--light);
+            padding: 60px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            font-size: 0.9rem;
+            color: #999;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-link {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            background-color: #2a2a35;
+            color: var(--light);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 36px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .newsletter-form {
+            display: flex;
+            margin-top: 15px;
+        }
+        
+        .newsletter-input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            outline: none;
+        }
+        
+        .newsletter-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 15px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .newsletter-btn:hover {
+            background-color: #c00500;
+        }
+        
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
+    @media screen and (max-width: 768px) {
+      .circuit-row {
+        flex-direction: column;
+      }
+
+      .circuit-img,
+      .circuit-info {
+        width: 100%;
+      }
+    }
+
+    :root {
+            --primary: #e10600;
+            --secondary: #1e1e1e;
+            --light: #f5f5f5;
+            --dark: #15151e;
+            --accent: #00a19b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header and Navigation */
+        header {
+            background-color: rgba(21, 21, 30, 0.9);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--light);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--dark);
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        
+        .dropdown-content a {
+            color: var(--light);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s ease;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #2a2a35;
+            color: var(--primary);
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .login-btn {
+            background-color: transparent;
+            color: var(--light);
+            border: 1px solid var(--primary);
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .login-btn:hover {
+            background-color: var(--primary);
+            color: var(--light);
+        }
+        
+        /* Hero Section - Full Screen */
+        .hero {
+            height: 100vh;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/api/placeholder/1920/1080') center/cover no-repeat;
+            background-attachment: fixed;
+            z-index: -1;
+        }
+        
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: var(--light);
+            width: 90%;
+            max-width: 900px;
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: var(--light);
+            padding: 15px 40px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+        
+        .hero-btn:hover {
+            background-color: #c00500;
+            transform: translateY(-2px);
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            cursor: pointer;
+        }
+        
+        .scroll-indicator svg {
+            width: 40px;
+            height: 40px;
+            fill: var(--light);
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-20px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+        }
+        
+        /* Main Content */
+        .main-content {
+            position: relative;
+            z-index: 1;
+            background-color: var(--light);
+        }
+        
+        /* News Section */
+        .news-section {
+            padding: 80px 0 60px;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.2rem;
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary);
+            margin: 10px auto;
+        }
+        
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .news-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .news-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .news-content {
+            padding: 20px;
+        }
+        
+        .news-date {
+            font-size: 0.8rem;
+            color: #777;
+            margin-bottom: 10px;
+        }
+        
+        .news-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .news-excerpt {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        
+        .read-more {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        
+        .read-more:hover {
+            color: #c00500;
+        }
+        
+        /* Quick Links Section */
+        .quick-links {
+            padding: 60px 0;
+            background-color: #f8f8f8;
+        }
+        
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .link-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .link-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .link-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .link-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .link-desc {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .link-btn {
+            display: inline-block;
+            background-color: transparent;
+            color: var(--dark);
+            border: 2px solid var(--dark);
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .link-btn:hover {
+            background-color: var(--dark);
+            color: white;
+        }
+        
+        /* Upcoming Races */
+        .races-section {
+            padding: 60px 0;
+        }
+        
+        .race-card {
+            display: flex;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .race-img {
+            width: 30%;
+            min-height: 200px;
+            object-fit: cover;
+        }
+        
+        .race-details {
+            padding: 20px;
+            flex: 1;
+        }
+        
+        .race-date {
+            font-size: 0.9rem;
+            color: #777;
+            margin-bottom: 10px;
+        }
+        
+        .race-name {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .race-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .info-icon {
+            color: var(--primary);
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .info-text {
+            font-size: 0.9rem;
+        }
+        
+        .view-race-btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .view-race-btn:hover {
+            background-color: #008c87;
+        }
+        
+        /* Featured Content Section */
+        .featured-section {
+            padding: 60px 0;
+            background-color: var(--dark);
+            color: var(--light);
+        }
+        
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+        
+        .featured-card {
+            background-color: #2a2a35;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .featured-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .featured-img {
+            height: 250px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .featured-content {
+            padding: 25px;
+        }
+        
+        .featured-tag {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+        }
+        
+        .featured-title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .featured-excerpt {
+            color: #bbb;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+        
+        .featured-btn {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        
+        .featured-btn:hover {
+            color: #00ccc3;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--light);
+            padding: 60px 0 20px;
+            margin-top: auto;
+        }
+        .footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            font-size: 0.9rem;
+            color: #999;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-link {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            background-color: #2a2a35;
+            color: var(--light);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 36px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .newsletter-form {
+            display: flex;
+            margin-top: 15px;
+        }
+        
+        .newsletter-input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            outline: none;
+        }
+        
+        .newsletter-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 15px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .newsletter-btn:hover {
+            background-color: #c00500;
+        }
+        
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            .news-grid, .links-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .featured-grid, .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            nav ul {
+                display: none;
+            }
+            .race-card {
+                flex-direction: column;
+            }
+            .race-img {
+                width: 100%;
+            }
+            .news-grid, .links-grid, .featured-grid, .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+                
+        header.scrolled {
+            background-color: rgba(21, 21, 30, 1);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            padding: 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .countdown-container {
+            background-color: var(--primary);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .countdown-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .countdown-number {
+            font-size: 2rem;
+            font-weight: 700;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 10px 15px;
+            border-radius: 5px;
+            width: 60px;
+            text-align: center;
+        }
+
+        .countdown-label {
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+
+        .race-simulation {
+            background-color: #f8f8f8;
+            padding: 40px 0;
+            margin-top: 40px;
+        }
+
+        .race-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .race-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        #race-status {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        #start-race-btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #start-race-btn:hover {
+            background-color: #008c87;
+        }
+
+        #start-race-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        #leaderboard {
+            margin-top: 20px;
+        }
+
+        .driver-position {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            transition: all 0.3s ease;
+        }
+
+        .driver-position:hover {
+            background-color: #f9f9f9;
+        }
+
+        .position {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            background-color: var(--dark);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 28px;
+            font-weight: 600;
+            margin-right: 15px;
+        }
+
+        .lap-time {
+            margin-left: auto;
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .carousel {
+            position: relative;
+            overflow: hidden;
+            margin: 40px 0;
+            height: 400px;
+        }
+
+        .carousel-container {
+            display: flex;
+            position: relative;
+            height: 100%;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--dark);
+            color: white;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 1;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+            z-index: 2;
+        }
+
+        .carousel-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .carousel-text {
+            font-size: 1.1rem;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            z-index: 3;
+        }
+
+        .carousel-btn {
+            background-color: rgba(255, 255, 255, 0.3);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-btn:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .stat-container {
+            background-color: var(--light);
+            padding: 40px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .stat-card {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .tooltip {
+            position: absolute;
+            background-color: rgba(30, 30, 30, 0.9);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        .animated-stat {
+            transition: all 0.5s ease;
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .countdown-timer {
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 3D Flip Card Effect */
+        .flip-card {
+            perspective: 1000px;
+            height: 250px;
+            margin-bottom: 30px;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .flip-card-front {
+            background-color: white;
+            color: var(--dark);
+        }
+
+        .flip-card-back {
+            background-color: var(--accent);
+            color: white;
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .flip-card-back h3 {
+            margin-bottom: 15px;
+        }
+
+        /* Progress bars for driver statistics */
+        .progress-container {
+            margin: 15px 0;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background-color: #eee;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary);
+            border-radius: 5px;
+            transition: width 1.5s ease-out;
+        }
+
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f0f0f0;
+    margin-top: auto;
+}
+
+.standings-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.nav-tabs {
+    display: flex;
+    background-color: white;
+    border-bottom: 1px solid #ddd;
+}
+
+.tab-button {
+    padding: 15px 25px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.tab-button.active {
+    color: #e10600;
+    border-bottom: 3px solid #e10600;
+}
+
+.standings-content {
+    padding: 20px;
+    background-color: #2d2d3a;
+    color: white;
+}
+
+.hidden {
+    display: none;
+}
+
+.standings-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: normal;
+    margin-bottom: 30px;
+}
+
+/* Featured Drivers Section */
+.featured-drivers, .featured-teams {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+}
+
+.driver-card, .team-card {
+    position: relative;
+    width: 200px;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    color: black;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.driver-stripe {
+    height: 5px;
+    width: 100%;
+}
+
+.red-bull {
+    background-color: #0600ef;
+}
+
+.mclaren {
+    background-color: #ff8700;
+}
+
+.driver-image, .team-logo {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.driver-info {
+    padding: 10px;
+    background-color: #24242f;
+    color: white;
+}
+
+.driver-flag {
+    font-size: 20px;
+    margin-right: 5px;
+}
+
+.team-car {
+    padding: 10px;
+    background-color: #f8f8f8;
+}
+
+.car-image {
+    width: 100%;
+    height: auto;
+}
+
+/* Standings List */
+.standings-list {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.standings-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    color: #333;
+    border-bottom: 1px solid #eee;
+}
+
+.position {
+    width: 30px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.driver-name, .team-name {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.flag {
+    margin-right: 5px;
+}
+
+.team, .drivers {
+    font-size: 12px;
+    color: #777;
+}
+
+.points {
+    font-weight: bold;
+    padding: 5px 10px;
+    background-color: #f5f5f5;
+    border-radius: 15px;
+    margin-right: 10px;
+}
+
+.view-more {
+    font-size: 20px;
+    color: #999;
+}
+
+.view-full-standings {
+    display: block;
+    background-color: #e10600;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    width: 200px;
+    margin: 20px auto;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+}
+
+.placeholder-text {
+    text-align: center;
+    padding: 50px 0;
+    font-style: italic;
+    color: #ccc;
+}
+
+body {
+  padding-top: 150px;
+}
+
+footer {
+  width: 100%;
+  background-color: #15151e; /* Replace with your desired color */
+  position: relative;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin-top: auto;
+}
+
+/* Dropdown styling */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 200px;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    padding: 10px;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 8px 12px;
+    color: #333;
+    text-decoration: none;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+
+
+  </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+      <div class="container header-content">
+          <a href="homepage.html" class="logo">F1 <span>Analysis</span></a>
+          <nav>
+              <ul>
+                  <li class="dropdown">
+                      <a href="About F1.html" >About F1</a>
+                      
+                  </li>
+                  <li class="dropdown">
+                      <a href="#" onclick="showDropdown(event, 'info-dropdown')">F1 Info</a>
+                      <div id="info-dropdown" class="dropdown-content">
+                          <a href="circuits.html">Circuits</a>
+                          <a href="Schedule.html">Schedules</a>
+                          <a href="drivers.html">Drivers</a>
+                          <a href="teams.html">Teams</a>
+                      </div>
+                  </li>
+                  <li class="dropdown">
+                      <a href="results.html" >Results</a>
+                      
+                      
+                  </li>
+                  <li><a href="tickets.html">Tickets</a></li>
+              </ul>
+          </nav>
+          <div class="user-actions">
+            <button class="login-btn" onclick="window.location.href='/profile'">Dashboard</button>
+          </div>
+      </div>
+  </header>
+
+
+  <div class="circuit-row">
+    <div class="circuit-img">
+      <img src="canadiantrack.png" alt="Canadian GP">
+    </div>
+    <div class="circuit-info">
+      <h2>Canadian Grand Prix</h2>
+      <p><strong>Date:</strong> June 9</p>
+      <p><strong>Location:</strong> Montreal</p>
+      <p><strong>Length:</strong> 4.361 km</p>
+      <p><strong>Laps:</strong> 70</p>
+      <div class="description">
+        Held at Circuit Gilles Villeneuve, famous for tight chicanes and high-speed straights.
+      </div>
+      <div class="more-info">
+        <p><strong>History:</strong> First hosted in 1978, the Canadian GP became iconic due to Gilles Villeneuve's victory in its debut year. The circuit was renamed in his honor after his tragic passing.</p>
+        <p><strong>Famous Moments:</strong> Jenson Button’s legendary 2011 win in changing weather is one of F1’s greatest comebacks. The "Wall of Champions" has claimed many elite drivers.</p>
+        <p><strong>Fun Fact:</strong> The track is located on a man-made island originally built for the 1967 Expo and 1976 Olympics.</p>
+      </div>
+      <button class="view-more-btn" onclick="toggleMore(this)">View More</button>
+    </div>
+  </div>
+
+  <div class="circuit-row">
+    <div class="circuit-img">
+      <img src="abudabhigp.png" alt="Abu Dhabi GP">
+    </div>
+    <div class="circuit-info">
+      <h2>Abu Dhabi Grand Prix</h2>
+      <p><strong>Date:</strong> December 8</p>
+      <p><strong>Location:</strong> Yas Marina</p>
+      <p><strong>Length:</strong> 5.281 km</p>
+      <p><strong>Laps:</strong> 58</p>
+      <div class="description">
+        Season finale at twilight, blending day and night racing drama.
+      </div>
+      <div class="more-info">
+        <p><strong>History:</strong> Introduced in 2009, it's the first F1 race to start in daylight and finish under floodlights.</p>
+        <p><strong>Famous Moments:</strong> The 2021 showdown between Verstappen and Hamilton was one of the most controversial and intense championship finishes in history.</p>
+        <p><strong>Fun Fact:</strong> Drivers race under a luxury hotel that changes colors throughout the race, making it visually iconic.</p>
+      </div>
+      <button class="view-more-btn" onclick="toggleMore(this)">View More</button>
+    </div>
+  </div>
+
+  <div class="circuit-row">
+    <div class="circuit-img">
+      <img src="bharaingp.png" alt="Bahrain GP">
+    </div>
+    <div class="circuit-info">
+      <h2>Bahrain Grand Prix</h2>
+      <p><strong>Date:</strong> March 2</p>
+      <p><strong>Location:</strong> Sakhir</p>
+      <p><strong>Length:</strong> 5.412 km</p>
+      <p><strong>Laps:</strong> 57</p>
+      <div class="description">
+        The season opener under the lights, showcasing intense desert action.
+      </div>
+      <div class="more-info">
+        <p><strong>History:</strong> First hosted in 2004 and became a night race in 2014 to beat the desert heat.</p>
+        <p><strong>Famous Moments:</strong> Known for wheel-to-wheel battles and dramatic strategies.</p>
+        <p><strong>Fun Fact:</strong> The 2020 Sakhir GP layout was an ultra-fast oval configuration.</p>
+      </div>
+      <button class="view-more-btn" onclick="toggleMore(this)">View More</button>
+    </div>
+  </div>
+  
+  <div class="circuit-row">
+    <div class="circuit-img">
+      <img src="saudigp.png" alt="Saudi Arabian GP">
+    </div>
+    <div class="circuit-info">
+      <h2>Saudi Arabian Grand Prix</h2>
+      <p><strong>Date:</strong> March 9</p>
+      <p><strong>Location:</strong> Jeddah</p>
+      <p><strong>Length:</strong> 6.174 km</p>
+      <p><strong>Laps:</strong> 50</p>
+      <div class="description">
+        One of the fastest street circuits in the world, lit entirely by LEDs.
+      </div>
+      <div class="more-info">
+        <p><strong>History:</strong> Debuted in 2021 with narrow barriers and high speeds.</p>
+        <p><strong>Famous Moments:</strong> 2021 featured a tense duel between Hamilton and Verstappen.</p>
+        <p><strong>Fun Fact:</strong> Over 600 light poles are used to illuminate the night race.</p>
+      </div>
+      <button class="view-more-btn" onclick="toggleMore(this)">View More</button>
+    </div>
+  </div>
+  
+  <div class="circuit-row">
+    <div class="circuit-img">
+      <img src="australiangp.png" alt="Australian GP">
+    </div>
+    <div class="circuit-info">
+      <h2>Australian Grand Prix</h2>
+      <p><strong>Date:</strong> March 24</p>
+      <p><strong>Location:</strong> Melbourne</p>
+      <p><strong>Length:</strong> 5.278 km</p>
+      <p><strong>Laps:</strong> 58</p>
+      <div class="description">
+        Set around Albert Park Lake, offering high-speed racing in a parkland setting.
+      </div>
+      <div class="more-info">
+        <p><strong>History:</strong> A staple in F1 since 1996, often the season opener before Bahrain took over.</p>
+        <p><strong>Famous Moments:</strong> 2002 saw a massive first-corner crash involving multiple cars.</p>
+        <p><strong>Fun Fact:</strong> Recent layout tweaks made the track faster and more flowing.</p>
+      </div>
+      <button class="view-more-btn" onclick="toggleMore(this)">View More</button>
+    </div>
+  </div>
+  
+  <div class="circuit-row">
+    <div class="circuit-img">
+      <img src="japanesegp.png" alt="Japanese GP">
+    </div>
+    <div class="circuit-info">
+      <h2>Japanese Grand Prix</h2>
+      <p><strong>Date:</strong> April 7</p>
+      <p><strong>Location:</strong> Suzuka</p>
+      <p><strong>Length:</strong> 5.807 km</p>
+      <p><strong>Laps:</strong> 53</p>
+      <div class="description">
+        Legendary figure-eight layout and passionate fans define this iconic track.
+      </div>
+      <div class="more-info">
+        <p><strong>History:</strong> Hosted title-deciding races in multiple decades.</p>
+        <p><strong>Famous Moments:</strong> Senna vs. Prost in 1989 and 1990 – true F1 drama.</p>
+        <p><strong>Fun Fact:</strong> One of the few circuits to feature a crossover section.</p>
+      </div>
+      <button class="view-more-btn" onclick="toggleMore(this)">View More</button>
+    </div>
+  </div>
+  
+  <div class="circuit-row">
+    <div class="circuit-img">
+      <img src="chinesegp.png" alt="Chinese GP">
+    </div>
+    <div class="circuit-info">
+      <h2>Chinese Grand Prix</h2>
+      <p><strong>Date:</strong> April 21</p>
+      <p><strong>Location:</strong> Shanghai</p>
+      <p><strong>Length:</strong> 5.451 km</p>
+      <p><strong>Laps:</strong> 56</p>
+      <div class="description">
+        Back on the calendar in 2024 with a wide circuit and long straights.
+      </div>
+      <div class="more-info">
+        <p><strong>History:</strong> Joined the calendar in 2004 and known for variable weather.</p>
+        <p><strong>Famous Moments:</strong> Hamilton's dramatic slide into the gravel in 2007 cost him the title shot.</p>
+        <p><strong>Fun Fact:</strong> The turn 1-2 complex is famous for its snail-shell-like layout.</p>
+      </div>
+      <button class="view-more-btn" onclick="toggleMore(this)">View More</button>
+    </div>
+  </div>
+  
+  <div class="circuit-row">
+    <div class="circuit-img">
+      <img src="miamigp.png" alt="Miami GP">
+    </div>
+    <div class="circuit-info">
+      <h2>Miami Grand Prix</h2>
+      <p><strong>Date:</strong> May 5</p>
+      <p><strong>Location:</strong> Miami</p>
+      <p><strong>Length:</strong> 5.412 km</p>
+      <p><strong>Laps:</strong> 57</p>
+      <div class="description">
+        Glamorous American race winding around Hard Rock Stadium.
+      </div>
+      <div class="more-info">
+        <p><strong>History:</strong> First held in 2022 as part of F1's U.S. expansion.</p>
+        <p><strong>Famous Moments:</strong> Verstappen’s storming drive in 2022 from 3rd to 1st.</p>
+        <p><strong>Fun Fact:</strong> Features a fake marina to evoke Monaco vibes.</p>
+      </div>
+      <button class="view-more-btn" onclick="toggleMore(this)">View More</button>
+    </div>
+  </div>
+  
+  <div class="circuit-row">
+    <div class="circuit-img">
+      <img src="emiliagp.png" alt="Emilia Romagna GP">
+    </div>
+    <div class="circuit-info">
+      <h2>Emilia Romagna Grand Prix</h2>
+      <p><strong>Date:</strong> May 19</p>
+      <p><strong>Location:</strong> Imola</p>
+      <p><strong>Length:</strong> 4.909 km</p>
+      <p><strong>Laps:</strong> 63</p>
+      <div class="description">
+        Historic venue surrounded by Ferrari's home crowd and Italian motorsport legacy.
+      </div>
+      <div class="more-info">
+        <p><strong>History:</strong> Hosted San Marino GPs in the 80s and 90s, returned in 2020.</p>
+        <p><strong>Famous Moments:</strong> 2021 featured a wet-dry thriller with red flags and chaos.</p>
+        <p><strong>Fun Fact:</strong> The circuit layout honors the memory of Ayrton Senna and Roland Ratzenberger.</p>
+      </div>
+      <button class="view-more-btn" onclick="toggleMore(this)">View More</button>
+    </div>
+  </div>
+  
+  <div class="circuit-row">
+    <div class="circuit-img">
+      <img src="monacogp.png" alt="Monaco GP">
+    </div>
+    <div class="circuit-info">
+      <h2>Monaco Grand Prix</h2>
+      <p><strong>Date:</strong> May 26</p>
+      <p><strong>Location:</strong> Monte Carlo</p>
+      <p><strong>Length:</strong> 3.337 km</p>
+      <p><strong>Laps:</strong> 78</p>
+      <div class="description">
+        The crown jewel of F1 with tight streets, yachts, and glitz.
+      </div>
+      <div class="more-info">
+        <p><strong>History:</strong> Part of F1 since 1950, it’s a driver’s favorite for prestige.</p>
+        <p><strong>Famous Moments:</strong> Senna’s dominance and crashes in the narrow streets.</p>
+        <p><strong>Fun Fact:</strong> It’s so tight, overtaking is nearly impossible—qualifying is everything.</p>
+      </div>
+      <button class="view-more-btn" onclick="toggleMore(this)">View More</button>
+    </div>
+  </div>
+  
+  <div class="circuit-row">
+    <div class="circuit-img">
+      <img src="canndiangp.png" alt="Canadian GP">
+    </div>
+    <div class="circuit-info">
+      <h2>Canadian Grand Prix</h2>
+      <p><strong>Date:</strong> June 9</p>
+      <p><strong>Location:</strong> Montreal</p>
+      <p><strong>Length:</strong> 4.361 km</p>
+      <p><strong>Laps:</strong> 70</p>
+      <div class="description">
+        High-speed straights and tight chicanes on a semi-street circuit.
+      </div>
+      <div class="more-info">
+        <p><strong>History:</strong> Home to dramatic wet races and the 'Wall of Champions'.</p>
+        <p><strong>Famous Moments:</strong> Button’s last-to-first win in 2011 in the rain.</p>
+        <p><strong>Fun Fact:</strong> The final corner has claimed many champions, giving rise to its nickname.</p>
+      </div>
+      <button class="view-more-btn" onclick="toggleMore(this)">View More</button>
+    </div>
+  </div>
+  
+  <div class="circuit-row">
+    <div class="circuit-img">
+      <img src="spanishgp.png" alt="Spanish GP">
+    </div>
+    <div class="circuit-info">
+      <h2>Spanish Grand Prix</h2>
+      <p><strong>Date:</strong> June 23</p>
+      <p><strong>Location:</strong> Barcelona</p>
+      <p><strong>Length:</strong> 4.657 km</p>
+      <p><strong>Laps:</strong> 66</p>
+      <div class="description">
+        A favorite for testing, with a variety of corners and technical challenges.
+      </div>
+      <div class="more-info">
+        <p><strong>History:</strong> Held at the Circuit de Barcelona-Catalunya since 1991.</p>
+        <p><strong>Famous Moments:</strong> Verstappen’s maiden win in 2016 after a Mercedes clash.</p>
+        <p><strong>Fun Fact:</strong> Teams know this track better than any other due to preseason testing.</p>
+      </div>
+      <button class="view-more-btn" onclick="toggleMore(this)">View More</button>
+    </div>
+  </div>
+  
+  <div class="circuit-row">
+    <div class="circuit-img">
+      <img src="austriagp.png" alt="Austrian GP">
+    </div>
+    <div class="circuit-info">
+      <h2>Austrian Grand Prix</h2>
+      <p><strong>Date:</strong> June 30</p>
+      <p><strong>Location:</strong> Spielberg</p>
+      <p><strong>Length:</strong> 4.318 km</p>
+      <p><strong>Laps:</strong> 71</p>
+      <div class="description">
+        Short, fast, and scenic, nestled in the Styrian mountains.
+      </div>
+      <div class="more-info">
+        <p><strong>History:</strong> Red Bull revived the circuit in 2014 after years of absence.</p>
+        <p><strong>Famous Moments:</strong> Norris defending against Hamilton in 2021 thrilled fans.</p>
+        <p><strong>Fun Fact:</strong> It's one of the shortest lap times on the calendar.</p>
+      </div>
+      <button class="view-more-btn" onclick="toggleMore(this)">View More</button>
+    </div>
+  </div>
+  
+  <div class="circuit-row">
+    <div class="circuit-img">
+      <img src="britishgp.png" alt="British GP">
+    </div>
+    <div class="circuit-info">
+      <h2>British Grand Prix</h2>
+      <p><strong>Date:</strong> July 7</p>
+      <p><strong>Location:</strong> Silverstone</p>
+      <p><strong>Length:</strong> 5.891 km</p>
+      <p><strong>Laps:</strong> 52</p>
+      <div class="description">
+        Birthplace of F1 and home to some of the most passionate fans.
+      </div>
+      <div class="more-info">
+        <p><strong>History:</strong> Hosted the very first F1 race in 1950.</p>
+        <p><strong>Famous Moments:</strong> Hamilton’s comeback drive in 2021 after a clash with Verstappen.</p>
+        <p><strong>Fun Fact:</strong> Known for Maggotts-Becketts—one of the best corner sequences in motorsport.</p>
+      </div>
+      <button class="view-more-btn" onclick="toggleMore(this)">View More</button>
+    </div>
+  </div>
+  
+  <div class="circuit-row">
+    <div class="circuit-img">
+      <img src="hungariangp.png" alt="Hungarian GP">
+    </div>
+    <div class="circuit-info">
+      <h2>Hungarian Grand Prix</h2>
+      <p><strong>Date:</strong> July 21</p>
+      <p><strong>Location:</strong> Budapest</p>
+      <p><strong>Length:</strong> 4.381 km</p>
+      <p><strong>Laps:</strong> 70</p>
+      <div class="description">
+        Tight and twisty, often compared to Monaco without the walls.
+      </div>
+      <div class="more-info">
+        <p><strong>History:</strong> A mainstay since 1986 and often unpredictable due to summer storms.</p>
+        <p><strong>Famous Moments:</strong> Alonso’s maiden win in 2003 and Ocon’s 2021 upset victory.</p>
+        <p><strong>Fun Fact:</strong> Overtaking is tough, making qualifying crucial.</p>
+      </div>
+      <button class="view-more-btn" onclick="toggleMore(this)">View More</button>
+    </div>
+  </div>
+  
+  <div class="circuit-row">
+    <div class="circuit-img">
+      <img src="belgiangp.png" alt="Belgian GP">
+    </div>
+    <div class="circuit-info">
+      <h2>Belgian Grand Prix</h2>
+      <p><strong>Date:</strong> July 28</p>
+      <p><strong>Location:</strong> Spa-Francorchamps</p>
+      <p><strong>Length:</strong> 7.004 km</p>
+      <p><strong>Laps:</strong> 44</p>
+      <div class="description">
+        Legendary high-speed rollercoaster through the Ardennes Forest.
+      </div>
+      <div class="more-info">
+        <p><strong>History:</strong> Historic, fast, and dangerous—Spa is a fan and driver favorite.</p>
+        <p><strong>Famous Moments:</strong> Schumacher’s debut in 1991 and countless Eau Rouge battles.</p>
+        <p><strong>Fun Fact:</strong> Weather can change in different parts of the track within minutes.</p>
+      </div>
+      <button class="view-more-btn" onclick="toggleMore(this)">View More</button>
+    </div>
+  </div>
+    
+  <div class="circuit-row">
+    <div class="circuit-img">
+      <img src="dutchgp.png" alt="Dutch GP">
+    </div>
+    <div class="circuit-info">
+      <h2>Dutch Grand Prix</h2>
+      <p><strong>Date:</strong> August 25</p>
+      <p><strong>Location:</strong> Zandvoort</p>
+      <p><strong>Length:</strong> 4.259 km</p>
+      <p><strong>Laps:</strong> 72</p>
+      <div class="description">
+        Coastal rollercoaster with steep banking and passionate home crowd.
+      </div>
+      <div class="more-info">
+        <p><strong>History:</strong> Returned in 2021 after a 36-year absence to honor Dutch hero Max Verstappen.</p>
+        <p><strong>Famous Moments:</strong> Verstappen’s dominant wins electrified orange-clad fans.</p>
+        <p><strong>Fun Fact:</strong> The circuit has a unique banked corner at Turn 3 that challenges even seasoned drivers.</p>
+      </div>
+      <button class="view-more-btn" onclick="toggleMore(this)">View More</button>
+    </div>
+  </div>
+  
+  <div class="circuit-row">
+    <div class="circuit-img">
+      <img src="italiangp.png" alt="Italian GP">
+    </div>
+    <div class="circuit-info">
+      <h2>Italian Grand Prix</h2>
+      <p><strong>Date:</strong> September 1</p>
+      <p><strong>Location:</strong> Monza</p>
+      <p><strong>Length:</strong> 5.793 km</p>
+      <p><strong>Laps:</strong> 53</p>
+      <div class="description">
+        The "Temple of Speed" where history and horsepower collide.
+      </div>
+      <div class="more-info">
+        <p><strong>History:</strong> One of the oldest tracks, Monza has been on the calendar since 1950.</p>
+        <p><strong>Famous Moments:</strong> Gasly’s 2020 win stunned the paddock and fans alike.</p>
+        <p><strong>Fun Fact:</strong> Tifosi (Ferrari fans) bring unmatched energy to the podium celebrations.</p>
+      </div>
+      <button class="view-more-btn" onclick="toggleMore(this)">View More</button>
+    </div>
+  </div>
+  
+  <div class="circuit-row">
+    <div class="circuit-img">
+      <img src="azerbaijangp.png" alt="Azerbaijan GP">
+    </div>
+    <div class="circuit-info">
+      <h2>Azerbaijan Grand Prix</h2>
+      <p><strong>Date:</strong> September 15</p>
+      <p><strong>Location:</strong> Baku</p>
+      <p><strong>Length:</strong> 6.003 km</p>
+      <p><strong>Laps:</strong> 51</p>
+      <div class="description">
+        Fast street circuit with castle walls and chaos guaranteed.
+      </div>
+      <div class="more-info">
+        <p><strong>History:</strong> Joined in 2016 and quickly earned a reputation for unpredictable races.</p>
+        <p><strong>Famous Moments:</strong> Bottas’ heartbreaking puncture in 2018; Vettel vs. Hamilton clash in 2017.</p>
+        <p><strong>Fun Fact:</strong> Home to the longest flat-out section on the calendar.</p>
+      </div>
+      <button class="view-more-btn" onclick="toggleMore(this)">View More</button>
+    </div>
+  </div>
+  
+  <div class="circuit-row">
+    <div class="circuit-img">
+      <img src="singaporegp.png" alt="Singapore GP">
+    </div>
+    <div class="circuit-info">
+      <h2>Singapore Grand Prix</h2>
+      <p><strong>Date:</strong> September 22</p>
+      <p><strong>Location:</strong> Marina Bay</p>
+      <p><strong>Length:</strong> 4.928 km</p>
+      <p><strong>Laps:</strong> 61</p>
+      <div class="description">
+        The original night race with unforgiving walls and humid heat.
+      </div>
+      <div class="more-info">
+        <p><strong>History:</strong> First held in 2008 and known for its street circuit brutality.</p>
+        <p><strong>Famous Moments:</strong> The “Crashgate” scandal and numerous safety cars over the years.</p>
+        <p><strong>Fun Fact:</strong> Drivers lose up to 3kg due to extreme humidity and heat.</p>
+      </div>
+      <button class="view-more-btn" onclick="toggleMore(this)">View More</button>
+    </div>
+  </div>
+  
+  <div class="circuit-row">
+    <div class="circuit-img">
+      <img src="usagp.png" alt="United States GP">
+    </div>
+    <div class="circuit-info">
+      <h2>United States Grand Prix</h2>
+      <p><strong>Date:</strong> October 20</p>
+      <p><strong>Location:</strong> Austin</p>
+      <p><strong>Length:</strong> 5.513 km</p>
+      <p><strong>Laps:</strong> 56</p>
+      <div class="description">
+        COTA combines corners from legendary circuits and Texas flair.
+      </div>
+      <div class="more-info">
+        <p><strong>History:</strong> Hosted since 2012 with strong fan support and fun racing.</p>
+        <p><strong>Famous Moments:</strong> Hamilton’s many wins and Kimi’s fan-favorite 2018 victory.</p>
+        <p><strong>Fun Fact:</strong> Turn 1’s uphill blind apex is a unique challenge in F1.</p>
+      </div>
+      <button class="view-more-btn" onclick="toggleMore(this)">View More</button>
+    </div>
+  </div>
+  
+  <div class="circuit-row">
+    <div class="circuit-img">
+      <img src="mexicangp.png" alt="Mexican GP">
+    </div>
+    <div class="circuit-info">
+      <h2>Mexican Grand Prix</h2>
+      <p><strong>Date:</strong> October 27</p>
+      <p><strong>Location:</strong> Mexico City</p>
+      <p><strong>Length:</strong> 4.304 km</p>
+      <p><strong>Laps:</strong> 71</p>
+      <div class="description">
+        High altitude and a stadium atmosphere like no other.
+      </div>
+      <div class="more-info">
+        <p><strong>History:</strong> Returned in 2015 with fan-favorite Sergio Pérez energizing the home crowd.</p>
+        <p><strong>Famous Moments:</strong> Verstappen’s early dominance and epic podium scenes in the stadium.</p>
+        <p><strong>Fun Fact:</strong> Engines struggle here due to thin air at 2,200 meters elevation.</p>
+      </div>
+      <button class="view-more-btn" onclick="toggleMore(this)">View More</button>
+    </div>
+  </div>
+  
+  <div class="circuit-row">
+    <div class="circuit-img">
+      <img src="braziliangp.png" alt="Brazilian GP">
+    </div>
+    <div class="circuit-info">
+      <h2>Brazilian Grand Prix</h2>
+      <p><strong>Date:</strong> November 3</p>
+      <p><strong>Location:</strong> Interlagos</p>
+      <p><strong>Length:</strong> 4.309 km</p>
+      <p><strong>Laps:</strong> 71</p>
+      <div class="description">
+        Elevation changes, passionate fans, and unpredictable drama.
+      </div>
+      <div class="more-info">
+        <p><strong>History:</strong> Historic finishes and Senna’s homeland—Brazil is always emotional.</p>
+        <p><strong>Famous Moments:</strong> Hamilton’s 2008 last-corner title win; Verstappen’s wet mastery in 2016.</p>
+        <p><strong>Fun Fact:</strong> Weather often changes mid-race, leading to chaos and surprises.</p>
+      </div>
+      <button class="view-more-btn" onclick="toggleMore(this)">View More</button>
+    </div>
+  </div>
+  
+  <div class="circuit-row">
+    <div class="circuit-img">
+      <img src="lagp.png" alt="Las Vegas GP">
+    </div>
+    <div class="circuit-info">
+      <h2>Las Vegas Grand Prix</h2>
+      <p><strong>Date:</strong> November 23</p>
+      <p><strong>Location:</strong> Las Vegas Strip Circuit</p>
+      <p><strong>Length:</strong> 6.120 km</p>
+      <p><strong>Laps:</strong> 50</p>
+      <div class="description">
+        Neon lights, casinos, and a high-speed dash down the iconic Strip.
+      </div>
+      <div class="more-info">
+        <p><strong>History:</strong> Revived in 2023 after a controversial debut in the 1980s.</p>
+        <p><strong>Famous Moments:</strong> The 2023 race brought glitz and unpredictability in equal measure.</p>
+        <p><strong>Fun Fact:</strong> Drivers reach over 340 km/h as they blast past famous landmarks like Caesars Palace and the Bellagio.</p>
+      </div>
+      <button class="view-more-btn" onclick="toggleMore(this)">View More</button>
+    </div>
+  </div>
+  
+  <div class="circuit-row">
+    <div class="circuit-img">
+      <img src="qatargp.png" alt="Qatar GP">
+    </div>
+    <div class="circuit-info">
+      <h2>Qatar Grand Prix</h2>
+      <p><strong>Date:</strong> December 1</p>
+      <p><strong>Location:</strong> Lusail</p>
+      <p><strong>Length:</strong> 5.419 km</p>
+      <p><strong>Laps:</strong> 57</p>
+      <div class="description">
+        A desert night race known for its fast, flowing corners and punishing heat.
+      </div>
+      <div class="more-info">
+        <p><strong>History:</strong> Joined in 2021 and quickly proved to be physically demanding for drivers.</p>
+        <p><strong>Famous Moments:</strong> Alonso’s 2021 podium and the heat exhaustion chaos of 2023.</p>
+        <p><strong>Fun Fact:</strong> The Lusail International Circuit also hosts MotoGP and endurance racing events.</p>
+      </div>
+      <button class="view-more-btn" onclick="toggleMore(this)">View More</button>
+    </div>
+  </div>
+  
+  <div class="circuit-row">
+    <div class="circuit-img">
+      <img src="saudigp.png" alt="Saudi Arabian GP">
+    </div>
+    <div class="circuit-info">
+      <h2>Saudi Arabian Grand Prix</h2>
+      <p><strong>Date:</strong> March 9</p>
+      <p><strong>Location:</strong> Jeddah</p>
+      <p><strong>Length:</strong> 6.174 km</p>
+      <p><strong>Laps:</strong> 50</p>
+      <div class="description">
+        Blisteringly fast street race under the Arabian night sky.
+      </div>
+      <div class="more-info">
+        <p><strong>History:</strong> First hosted in 2021, it’s one of the fastest street circuits in F1 history.</p>
+        <p><strong>Famous Moments:</strong> The 2021 Hamilton vs Verstappen showdown and safety car drama.</p>
+        <p><strong>Fun Fact:</strong> The circuit layout has over 27 corners, most of them taken at full throttle.</p>
+      </div>
+      <button class="view-more-btn" onclick="toggleMore(this)">View More</button>
+    </div>
+  </div>
+  
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>F1 Analysis</h3>
+                <p>Your comprehensive platform for Formula 1 data analysis, statistics, and insights.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">f</a>
+                    <a href="#" class="social-link">t</a>
+                    <a href="#" class="social-link">in</a>
+                    <a href="#" class="social-link">ig</a>
+                </div>
+            </div>
+            <div class="footer-column">
+              <h3>Quick Links</h3>
+              <ul class="footer-links">
+                  <li><a href="About F1.html">About F1</a></li>
+                  <li><a href="drivers.html">Drivers</a></li>
+                  <li><a href="Schedule.html">Schedule</a></li>
+                  <li><a href="results.html">Results</a></li>
+                  <li><a href="tickets.html">Tickets</a></li>
+              </ul>
+          </div>
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Newsletter</h3>
+                <p>Subscribe to our newsletter for the latest F1 news and analysis.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Your email" class="newsletter-input">
+                    <button type="submit" class="newsletter-btn">→</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 F1 Analysis. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+  
+
+  <script>
+    // Fade-in observer
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.circuit-row').forEach(row => {
+      observer.observe(row);
+    });
+
+    // View More toggle
+    function toggleMore(button) {
+      const moreInfo = button.previousElementSibling;
+      moreInfo.classList.toggle('expanded');
+      button.textContent = moreInfo.classList.contains('expanded') ? "View Less" : "View More";
+    }
+
+    // Sticky Header with scroll effect
+    window.addEventListener('scroll', function() {
+        const header = document.querySelector('header');
+        if (window.scrollY > 100) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+
+    document.querySelectorAll('.toggle-info').forEach(button => {
+      button.addEventListener('click', () => {
+        const info = button.nextElementSibling;
+        info.style.display = info.style.display === 'block' ? 'none' : 'block';
+      });
+    });
+
+    
+  let dropdownTimeout;
+
+  function showDropdown(event, id) {
+    event.preventDefault();
+
+    // Close all dropdowns first
+    document.querySelectorAll('.dropdown-content').forEach(drop => {
+      drop.style.display = 'none';
+    });
+
+    // Show selected dropdown
+    const dropdown = document.getElementById(id);
+    dropdown.style.display = 'block';
+
+    clearTimeout(dropdownTimeout);
+    dropdownTimeout = setTimeout(() => {
+      dropdown.style.display = 'none';
+    }, 3000);
+  }
+
+
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,2064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 Analysis - Home</title>
+    <style>
+        :root {
+            --primary: #e10600;
+            --secondary: #1e1e1e;
+            --light: #f5f5f5;
+            --dark: #15151e;
+            --accent: #00a19b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header and Navigation */
+        header {
+            background-color: rgba(21, 21, 30, 0.9);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--light);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--dark);
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        
+        .dropdown-content a {
+            color: var(--light);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s ease;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #2a2a35;
+            color: var(--primary);
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .login-btn {
+            background-color: transparent;
+            color: var(--light);
+            border: 1px solid var(--primary);
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .login-btn:hover {
+            background-color: var(--primary);
+            color: var(--light);
+        }
+        
+        /* Hero Section - Full Screen */
+        .hero {
+            height: 100vh;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/api/placeholder/1920/1080') center/cover no-repeat;
+            background-attachment: fixed;
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: var(--light);
+            width: 90%;
+            max-width: 900px;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: var(--light);
+            padding: 15px 40px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+        
+        .hero-btn:hover {
+            background-color: #c00500;
+            transform: translateY(-2px);
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            cursor: pointer;
+        }
+        
+        .scroll-indicator svg {
+            width: 40px;
+            height: 40px;
+            fill: var(--light);
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-20px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+        }
+        
+        /* Main Content */
+        .main-content {
+            position: relative;
+            z-index: 1;
+            background-color: var(--light);
+        }
+        
+        /* News Section */
+        .news-section {
+            padding: 80px 0 60px;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.2rem;
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary);
+            margin: 10px auto;
+        }
+        
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .news-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .news-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .news-content {
+            padding: 20px;
+        }
+        
+        .news-date {
+            font-size: 0.8rem;
+            color: #777;
+            margin-bottom: 10px;
+        }
+        
+        .news-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .news-excerpt {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        
+        .read-more {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        
+        .read-more:hover {
+            color: #c00500;
+        }
+        
+        /* Quick Links Section */
+        .quick-links {
+            padding: 60px 0;
+            background-color: #f8f8f8;
+        }
+        
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .link-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .link-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .link-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .link-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .link-desc {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .link-btn {
+            display: inline-block;
+            background-color: transparent;
+            color: var(--dark);
+            border: 2px solid var(--dark);
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .link-btn:hover {
+            background-color: var(--dark);
+            color: white;
+        }
+        
+        /* Upcoming Races */
+        .races-section {
+            padding: 60px 0;
+        }
+        
+        .race-card {
+            display: flex;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .race-img {
+            width: 30%;
+            min-height: 200px;
+            object-fit: cover;
+        }
+        
+        .race-details {
+            padding: 20px;
+            flex: 1;
+        }
+        
+        .race-date {
+            font-size: 0.9rem;
+            color: #777;
+            margin-bottom: 10px;
+        }
+        
+        .race-name {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .race-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .info-icon {
+            color: var(--primary);
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .info-text {
+            font-size: 0.9rem;
+        }
+        
+        .view-race-btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .view-race-btn:hover {
+            background-color: #008c87;
+        }
+        
+        /* Featured Content Section */
+        .featured-section {
+            padding: 60px 0;
+            background-color: var(--dark);
+            color: var(--light);
+        }
+        
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+        
+        .featured-card {
+            background-color: #2a2a35;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .featured-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .featured-img {
+            height: 250px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .featured-content {
+            padding: 25px;
+        }
+        
+        .featured-tag {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+        }
+        
+        .featured-title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .featured-excerpt {
+            color: #bbb;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+        
+        .featured-btn {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        
+        .featured-btn:hover {
+            color: #00ccc3;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--light);
+            padding: 60px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            font-size: 0.9rem;
+            color: #999;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-link {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            background-color: #2a2a35;
+            color: var(--light);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 36px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .newsletter-form {
+            display: flex;
+            margin-top: 15px;
+        }
+        
+        .newsletter-input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            outline: none;
+        }
+        
+        .newsletter-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 15px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .newsletter-btn:hover {
+            background-color: #c00500;
+        }
+        
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            .news-grid, .links-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .featured-grid, .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            nav ul {
+                display: none;
+            }
+            .race-card {
+                flex-direction: column;
+            }
+            .race-img {
+                width: 100%;
+            }
+            .news-grid, .links-grid, .featured-grid, .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+                
+        header.scrolled {
+            background-color: rgba(21, 21, 30, 1);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            padding: 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .countdown-container {
+            background-color: var(--primary);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .countdown-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .countdown-number {
+            font-size: 2rem;
+            font-weight: 700;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 10px 15px;
+            border-radius: 5px;
+            width: 60px;
+            text-align: center;
+        }
+
+        .countdown-label {
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+
+        .race-simulation {
+            background-color: #f8f8f8;
+            padding: 40px 0;
+            margin-top: 40px;
+        }
+
+        .race-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .race-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        #race-status {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        #start-race-btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #start-race-btn:hover {
+            background-color: #008c87;
+        }
+
+        #start-race-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        #leaderboard {
+            margin-top: 20px;
+        }
+
+        .driver-position {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            transition: all 0.3s ease;
+        }
+
+        .driver-position:hover {
+            background-color: #f9f9f9;
+        }
+
+        .position {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            background-color: var(--dark);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 28px;
+            font-weight: 600;
+            margin-right: 15px;
+        }
+
+        .lap-time {
+            margin-left: auto;
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .carousel {
+            position: relative;
+            overflow: hidden;
+            margin: 40px 0;
+            height: 400px;
+        }
+
+        .carousel-container {
+            display: flex;
+            position: relative;
+            height: 100%;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--dark);
+            color: white;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 1;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+            z-index: 2;
+        }
+
+        .carousel-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .carousel-text {
+            font-size: 1.1rem;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            z-index: 3;
+        }
+
+        .carousel-btn {
+            background-color: rgba(255, 255, 255, 0.3);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-btn:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .stat-container {
+            background-color: var(--light);
+            padding: 40px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .stat-card {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .tooltip {
+            position: absolute;
+            background-color: rgba(30, 30, 30, 0.9);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        .animated-stat {
+            transition: all 0.5s ease;
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .countdown-timer {
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 3D Flip Card Effect */
+        .flip-card {
+            perspective: 1000px;
+            height: 250px;
+            margin-bottom: 30px;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .flip-card-front {
+            background-color: white;
+            color: var(--dark);
+        }
+
+        .flip-card-back {
+            background-color: var(--accent);
+            color: white;
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .flip-card-back h3 {
+            margin-bottom: 15px;
+        }
+
+        /* Progress bars for driver statistics */
+        .progress-container {
+            margin: 15px 0;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background-color: #eee;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary);
+            border-radius: 5px;
+            transition: width 1.5s ease-out;
+        }
+
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f0f0f0;
+}
+
+.standings-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.nav-tabs {
+    display: flex;
+    background-color: white;
+    border-bottom: 1px solid #ddd;
+}
+
+.tab-button {
+    padding: 15px 25px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.tab-button.active {
+    color: #e10600;
+    border-bottom: 3px solid #e10600;
+}
+
+.standings-content {
+    padding: 20px;
+    background-color: #2d2d3a;
+    color: white;
+}
+
+.hidden {
+    display: none;
+}
+
+.standings-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: normal;
+    margin-bottom: 30px;
+}
+
+/* Featured Drivers Section */
+.featured-drivers, .featured-teams {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+}
+
+.driver-card, .team-card {
+    position: relative;
+    width: 200px;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    color: black;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.driver-stripe {
+    height: 5px;
+    width: 100%;
+}
+
+.red-bull {
+    background-color: #0600ef;
+}
+
+.mclaren {
+    background-color: #ff8700;
+}
+
+.driver-image, .team-logo {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.driver-info {
+    padding: 10px;
+    background-color: #24242f;
+    color: white;
+}
+
+.driver-flag {
+    font-size: 20px;
+    margin-right: 5px;
+}
+
+.team-car {
+    padding: 10px;
+    background-color: #f8f8f8;
+}
+
+.car-image {
+    width: 100%;
+    height: auto;
+}
+
+/* Standings List */
+.standings-list {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.standings-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    color: #333;
+    border-bottom: 1px solid #eee;
+}
+
+.position {
+    width: 30px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.driver-name, .team-name {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.flag {
+    margin-right: 5px;
+}
+
+.team, .drivers {
+    font-size: 12px;
+    color: #777;
+}
+
+.points {
+    font-weight: bold;
+    padding: 5px 10px;
+    background-color: #f5f5f5;
+    border-radius: 15px;
+    margin-right: 10px;
+}
+
+.view-more {
+    font-size: 20px;
+    color: #999;
+}
+
+.view-full-standings {
+    display: block;
+    background-color: #e10600;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    width: 200px;
+    margin: 20px auto;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+}
+
+.placeholder-text {
+    text-align: center;
+    padding: 50px 0;
+    font-style: italic;
+    color: #ccc;
+}
+
+/* Dropdown styling */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 200px;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    padding: 10px;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 8px 12px;
+    color: #333;
+    text-decoration: none;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+} 
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    transition: top 0.4s ease;
+    z-index: 1000;
+}
+
+
+
+header.hide-header {
+    top: -100px;
+}
+.background-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  /* Ensures the video covers the screen */
+}
+
+</style>
+    
+</head>
+
+<!-- JavaScript -->
+<script>
+
+let dropdownTimeout;
+
+  function showDropdown(event, id) {
+    event.preventDefault();
+
+    // Close all dropdowns first
+    document.querySelectorAll('.dropdown-content').forEach(drop => {
+      drop.style.display = 'none';
+    });
+
+    // Show selected dropdown
+    const dropdown = document.getElementById(id);
+    dropdown.style.display = 'block';
+
+    clearTimeout(dropdownTimeout);
+    dropdownTimeout = setTimeout(() => {
+      dropdown.style.display = 'none';
+    }, 3000);
+  }
+
+  
+document.addEventListener('DOMContentLoaded', function() {
+    // Get all tab buttons and content sections
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const contentSections = document.querySelectorAll('.standings-content');
+    
+    // Add click event listeners to each tab button
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Remove active class from all buttons
+            tabButtons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            // Get the tab name from data attribute
+            const tabName = this.getAttribute('data-tab');
+            
+            // Hide all content sections
+            contentSections.forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // Show the corresponding content section
+            document.getElementById(`${tabName}-content`).classList.remove('hidden');
+        });
+    });
+    
+    // Add click event listeners to view more buttons
+    const viewMoreButtons = document.querySelectorAll('.view-more');
+    viewMoreButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // This would normally navigate to a detailed page
+            // For this example, we'll just show an alert
+            const itemName = this.parentElement.querySelector('strong').textContent;
+            alert(`Viewing details for ${itemName}`);
+        });
+    });
+    
+    // Add click event listeners to full standings buttons
+    const fullStandingsButtons = document.querySelectorAll('.view-full-standings');
+    fullStandingsButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Get the current active tab
+            const activeTab = document.querySelector('.tab-button.active').getAttribute('data-tab');
+            alert(`Navigating to full ${activeTab} standings page`);
+            // In a real application, this would redirect to a different page
+            // window.location.href = `/${activeTab}-full.html`;
+        });
+    });
+});
+    // Sticky Header with scroll effect
+    window.addEventListener('scroll', function() {
+        const header = document.querySelector('header');
+        if (window.scrollY > 100) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+    
+    // Countdown Timer for Next Race
+    function updateCountdown() {
+        const nextRaceDate = new Date('May 5, 2025 14:00:00').getTime();
+        const now = new Date().getTime();
+        const timeLeft = nextRaceDate - now;
+        
+        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+        
+        document.getElementById('countdown-days').innerText = days;
+        document.getElementById('countdown-hours').innerText = hours;
+        document.getElementById('countdown-minutes').innerText = minutes;
+        document.getElementById('countdown-seconds').innerText = seconds;
+        
+    }
+    
+    // Live Race Simulation
+    let lapCounter = 1;
+    const maxLaps = 10;
+    const drivers = [
+        { name: 'Hamilton', position: 1, lapTime: 92.5, variation: 0.5 },
+        { name: 'Verstappen', position: 2, lapTime: 92.7, variation: 0.6 },
+        { name: 'Leclerc', position: 3, lapTime: 93.1, variation: 0.4 },
+        { name: 'Norris', position: 4, lapTime: 93.3, variation: 0.7 }
+    ];
+    
+    function simulateLap() {
+        if (lapCounter > maxLaps) {
+            document.getElementById('race-status').innerText = 'Race Finished!';
+            return;
+        }
+        
+        // Simulate random lap times with variation
+        drivers.forEach(driver => {
+            driver.lapTime = driver.lapTime + (Math.random() * driver.variation * 2 - driver.variation);
+        });
+        
+        // Sort drivers by current position and lap times
+        drivers.sort((a, b) => a.lapTime - b.lapTime);
+        
+        // Update positions
+        drivers.forEach((driver, index) => {
+            driver.position = index + 1;
+        });
+        
+        // Update the DOM
+        const raceStatusEl = document.getElementById('race-status');
+        const leaderboardEl = document.getElementById('leaderboard');
+        
+        raceStatusEl.innerText = `Lap ${lapCounter} of ${maxLaps}`;
+        leaderboardEl.innerHTML = '';
+        
+        drivers.forEach(driver => {
+            const driverEl = document.createElement('div');
+            driverEl.className = 'driver-position';
+            driverEl.innerHTML = `<span class="position">${driver.position}</span> ${driver.name} <span class="lap-time">${driver.lapTime.toFixed(3)}s</span>`;
+            leaderboardEl.appendChild(driverEl);
+        });
+        
+        lapCounter++;
+        
+        // Schedule next lap
+        setTimeout(simulateLap, 3000);
+    }
+    
+    // Initialize animation and interactive elements when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        // Start countdown
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+        
+        // Initialize race simulation
+        document.getElementById('start-race-btn').addEventListener('click', function() {
+            this.disabled = true;
+            simulateLap();
+        });
+        
+        // Initialize carousel
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const totalSlides = slides.length;
+        
+        document.getElementById('next-slide').addEventListener('click', function() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % totalSlides;
+            slides[currentSlide].classList.add('active');
+        });
+        
+        document.getElementById('prev-slide').addEventListener('click', function() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+        });
+        
+        // Initialize data animations
+        const statElements = document.querySelectorAll('.animated-stat');
+        statElements.forEach(el => {
+            const target = parseInt(el.getAttribute('data-target'));
+            const duration = 2000; // ms
+            const step = target / (duration / 16);
+            let current = 0;
+            
+            const updateStat = () => {
+                current += step;
+                if (current < target) {
+                    el.textContent = Math.floor(current);
+                    requestAnimationFrame(updateStat);
+                } else {
+                    el.textContent = target;
+                }
+            };
+            
+            // Start animation when element is in viewport
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        updateStat();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+            
+            observer.observe(el);
+        });
+    });
+    
+    // Tooltip functionality
+    const tooltips = document.querySelectorAll('[data-tooltip]');
+    tooltips.forEach(tooltip => {
+        tooltip.addEventListener('mouseenter', function() {
+            const tooltipText = this.getAttribute('data-tooltip');
+            const tooltipEl = document.createElement('div');
+            tooltipEl.className = 'tooltip';
+            tooltipEl.textContent = tooltipText;
+            document.body.appendChild(tooltipEl);
+            
+            const rect = this.getBoundingClientRect();
+            tooltipEl.style.top = `${rect.bottom + window.scrollY + 10}px`;
+            tooltipEl.style.left = `${rect.left + window.scrollX}px`;
+        });
+        
+        tooltip.addEventListener('mouseleave', function() {
+            const tooltipEl = document.querySelector('.tooltip');
+            if (tooltipEl) tooltipEl.remove();
+        });
+    });
+    </script>
+
+<body>
+        <!-- Header & Navigation -->
+        <header>
+            <div class="container header-content">
+                <a href="homepage.html" class="logo">F1 <span>Analysis</span></a>
+                <nav>
+                    <ul>
+                        <li class="dropdown">
+                            <a href="About F1.html">About F1</a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" onclick="showDropdown(event, 'info-dropdown')">F1 Info</a>
+                            <div id="info-dropdown" class="dropdown-content">
+                                <a href="circuits.html">Circuits</a>
+                                <a href="Schedule.html">Schedules</a>
+                                <a href="drivers.html">Drivers</a>
+                                <a href="teams.html">Teams</a>
+                            </div>
+                        </li>
+                        <li class="dropdown">
+                            <a href="results.html">Results</a>
+                        </li>
+                        <li><a href="tickets.html">Tickets</a></li>
+                    </ul>
+                </nav>
+                <div class="user-actions">
+                    <!-- Redirect to profile page -->
+                    <button class="login-btn" onclick="window.location.href='/profile'">Dashboard</button>
+                </div>
+            </div>
+        </header>
+    
+        <!-- Hero Section (Full Screen) -->
+        <section class="hero">
+            <div class="hero-bg"></div>
+            <div class="hero-content">
+                <h1>Your Ultimate F1 Data Analysis Platform</h1>
+                <p>Deep insights, real-time statistics, and comprehensive analysis of Formula 1 races, drivers, and teams.</p>
+                <a href="#main-content" class="hero-btn">Explore Data</a>
+            </div>
+            <div class="hero-video">
+                <video autoplay loop muted playsinline class="background-video">
+                    <source src="herosectionvid.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <a href="#main-content" class="scroll-indicator">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+                </svg>
+            </a>
+        </section>
+    
+        <!-- Main Content starts here -->
+        <div id="main-content" class="main-content">
+            <!-- News Section -->
+            <section class="news-section">
+                <div class="container">
+                    <h2 class="section-title">Latest F1 News</h2>
+                    <div class="news-grid">
+                        <div class="news-card">
+                            <img src="frontpage_news.jpeg" alt="F1 News" class="news-img">
+                            <div class="news-content">
+                                <div class="news-date">March 2, 2025</div>
+                                <h3 class="news-title">Hamilton Dominates Qualifying in Bahrain</h3>
+                                <p class="news-excerpt">Lewis Hamilton secured pole position for the Bahrain Grand Prix with a stunning lap, beating his closest rival by 0.3 seconds.</p>
+                                <a href="https://www.formula1.com/en/latest/article/hamilton-apologises-to-ferrari-for-not-doing-the-job-in-bahrain-but-vows-to.6vMjOKOdTEW0Z4bKyTu7Z9" class="read-more">Read More</a>
+                            </div>
+                        </div>
+                        <div class="news-card">
+                            <img src="frontpage_news2.jpeg" alt="F1 News" class="news-img">
+                            <div class="news-content">
+                                <div class="news-date">March 1, 2025</div>
+                                <h3 class="news-title">Ferrari Unveils Major Upgrade Package</h3>
+                                <p class="news-excerpt">Ferrari has brought significant upgrades to their car ahead of the upcoming race weekend, focusing on improved aerodynamics.</p>
+                                <a href="https://www.autosport.com/f1/news/ferrari-introduces-car-upgrades-for-f1-bahrain-gp-to-combat-poor-form/10711842/" class="read-more">Read More</a>
+                            </div>
+                        </div>
+                        <div class="news-card">
+                            <img src="frontpage_news3.jpeg" alt="F1 News" class="news-img">
+                            <div class="news-content">
+                                <div class="news-date">February 28, 2025</div>
+                                <h3 class="news-title">Red Bull Facing Reliability Concerns</h3>
+                                <p class="news-excerpt">Red Bull Racing is addressing potential reliability issues after both cars experienced problems during Friday practice sessions.</p>
+                                <a href="https://www.the-race.com/formula-1/the-big-concern-in-verstappens-red-bull-reliability-verdict/" class="read-more">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 Standings</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <div class="standings-container">
+        <div class="nav-tabs">
+            <button class="tab-button active" data-tab="drivers">DRIVERS</button>
+            <button class="tab-button" data-tab="teams">TEAMS</button>
+            
+        </div>
+
+        <div class="standings-content" id="drivers-content">
+            <h1 class="standings-title">Driver Standings</h1>
+            
+            <div class="featured-drivers">
+                <div class="driver-card">
+                    <div class="driver-stripe red-bull"></div>
+                    <img src="max1.jpeg" alt="Driver" class="driver-image">
+                    <div class="driver-info">
+                        <span class="driver-flag">🇳🇱</span>
+                        <h3>VERSTAPPEN</h3>
+                    </div>
+                </div>
+                
+                <div class="driver-card">
+                    <div class="driver-stripe mclaren"></div>
+                    <img src="lando1.jpeg" alt="Driver" class="driver-image">
+                    <div class="driver-info">
+                        <span class="driver-flag">🇬🇧</span>
+                        <h3>NORRIS</h3>
+                    </div>
+                </div>
+                
+                <div class="driver-card">
+                    <div class="driver-stripe mclaren"></div>
+                    <img src="oscar1.jpeg" alt="Driver" class="driver-image">
+                    <div class="driver-info">
+                        <span class="driver-flag">🇦🇺</span>
+                        <h3>PIASTRI</h3>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="standings-list">
+                <div class="standings-item">
+                    <div class="position">1</div>
+                    <div class="driver-name">
+                        <span class="flag">🇬🇧</span>
+                        <strong>Lando NORRIS</strong>
+                        <span class="team">McLaren</span>
+                    </div>
+                    <div class="points">62 PTS</div>
+                    <div class="view-more">›</div>
+                </div>
+                
+                <div class="standings-item">
+                    <div class="position">2</div>
+                    <div class="driver-name">
+                        <span class="flag">🇳🇱</span>
+                        <strong>Max VERSTAPPEN</strong>
+                        <span class="team">Red Bull Racing</span>
+                    </div>
+                    <div class="points">61 PTS</div>
+                    <div class="view-more">›</div>
+                </div>
+                
+                <div class="standings-item">
+                    <div class="position">3</div>
+                    <div class="driver-name">
+                        <span class="flag">🇦🇺</span>
+                        <strong>Oscar PIASTRI</strong>
+                        <span class="team">McLaren</span>
+                    </div>
+                    <div class="points">49 PTS</div>
+                    <div class="view-more">›</div>
+                </div>
+            </div>
+            
+            <button class="view-full-standings" onclick="window.location.href='results.html'">
+                VIEW FULL STANDINGS
+              </button>
+              
+        </div>
+
+        <div class="standings-content hidden" id="teams-content">
+            <h1 class="standings-title">Team Standings</h1>
+            
+            <div class="featured-teams">
+                <div class="team-card">
+                    <img src="merc1logo.jpeg" alt="Mercedes" class="team-logo">
+                    <div class="team-car">
+                        <img src="merccar.jpeg" alt="Car" class="car-image">
+                    </div>
+                </div>
+                
+                <div class="team-card">
+                    <img src="maclogo1.png" alt="McLaren" class="team-logo">
+                    <div class="team-car">
+                        <img src="merccar.jpeg" alt="Car" class="car-image">
+                    </div>
+                </div>
+                
+                <div class="team-card">
+                    <img src="redlogo1.png" alt="Red Bull" class="team-logo" >
+                    <div class="team-car">
+                        <img src="redcar1.jpeg" alt="Car" class="car-image" style="padding-top: 80px;">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="standings-list">
+                <div class="standings-item">
+                    <div class="position">1</div>
+                    <div class="team-name">
+                        <strong>McLaren</strong>
+                        <span class="drivers">Piastri / Norris</span>
+                    </div>
+                    <div class="points">111 PTS</div>
+                    <div class="view-more">›</div>
+                </div>
+                
+                <div class="standings-item">
+                    <div class="position">2</div>
+                    <div class="team-name">
+                        <strong>Mercedes</strong>
+                        <span class="drivers">Russell / Antonelli</span>
+                    </div>
+                    <div class="points">75 PTS</div>
+                    <div class="view-more">›</div>
+                </div>
+                
+                <div class="standings-item">
+                    <div class="position">3</div>
+                    <div class="team-name">
+                        <strong>Red Bull Racing</strong>
+                        <span class="drivers">Verstappen / Tsunoda</span>
+                    </div>
+                    <div class="points">61 PTS</div>
+                    <div class="view-more">›</div>
+                </div>
+            </div>
+            
+            <button class="view-full-standings" onclick="window.location.href='results.html'">
+                VIEW FULL STANDINGS
+              </button>
+              
+        </div>
+
+        <div class="standings-content hidden" id="last-race-content">
+            <h1 class="standings-title">Last Race Results</h1>
+            <p class="placeholder-text">Visit the Last Race page for detailed results</p>
+            <button class="view-full-standings" onclick="window.location.href='results.html'">
+                VIEW FULL STANDINGS
+              </button>
+              
+        </div>
+    </div>
+
+
+    
+            <!-- Upcoming Races -->
+            <section class="races-section">
+                <div class="container">
+                    <h2 class="section-title">Upcoming Grand Prix Events</h2>
+                    <div class="race-card">
+                        <img src="bharaingp.png" alt="Bahrain Grand Prix" class="race-img">
+                        <div class="race-details">
+                            <div class="race-date">March 5-7, 2025</div>
+                            <h3 class="race-name">Gulf Air Bahrain Grand Prix</h3>
+                            <div class="race-info">
+                                <div class="info-item">
+                                    <span class="info-icon">📍</span>
+                                    <span class="info-text">Bahrain International Circuit, Sakhir</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-icon">🏎️</span>
+                                    <span class="info-text">5.412 km | 57 laps</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-icon">🏆</span>
+                                    <span class="info-text">2024 Winner: Max Verstappen</span>
+                                </div>
+                            </div>
+                            <a href="Schedule.html" class="view-race-btn">View Details</a>
+                        </div>
+                    </div>
+                    <div class="race-card">
+                        <img src="saudigp.png" alt="Saudi Arabian Grand Prix" class="race-img">
+                        <div class="race-details">
+                            <div class="race-date">March 12-14, 2025</div>
+                            <h3 class="race-name">STC Saudi Arabian Grand Prix</h3>
+                            <div class="race-info">
+                                <div class="info-item">
+                                    <span class="info-icon">📍</span>
+                                    <span class="info-text">Jeddah Corniche Circuit, Jeddah</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-icon">🏎️</span>
+                                    <span class="info-text">6.174 km | 50 laps</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-icon">🏆</span>
+                                    <span class="info-text">2024 Winner: Sergio Perez</span>
+                                </div>
+                            </div>
+                            <a href="Schedule.html" class="view-race-btn">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Race Countdown -->
+            <section class="countdown-container">
+                <div class="container">
+                    <h2 class="countdown-title">COUNTDOWN TO BAHRAIN GRAND PRIX</h2>
+                    <div class="countdown-timer">
+                        <div class="countdown-item">
+                            <span id="countdown-days" class="countdown-number">00</span>
+                            <span class="countdown-label">Days</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span id="countdown-hours" class="countdown-number">00</span>
+                            <span class="countdown-label">Hours</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span id="countdown-minutes" class="countdown-number">00</span>
+                            <span class="countdown-label">Minutes</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span id="countdown-seconds" class="countdown-number">00</span>
+                            <span class="countdown-label">Seconds</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <!-- Featured Content Section -->
+            <section class="featured-section">
+                <div class="container">
+                    <h2 class="section-title">Featured Analysis</h2>
+                    <div class="featured-grid">
+                        <div class="featured-card">
+                            <img src="pitstop1.jpeg" alt="Featured Analysis" class="featured-img">
+                            <div class="featured-content">
+                                <span class="featured-tag">Data Visualization</span>
+                                <h3 class="featured-title">The Evolution of Pit Stop Strategies: 2020-2025</h3>
+                                <p class="featured-excerpt">A deep dive into how pit stop strategies have evolved over the past five seasons and their impact on race outcomes.</p>
+                                <a href="https://statathlon.com/analysis-of-the-pit-stop-strategy-in-f1/" class="featured-btn">Read Analysis →</a>
+                            </div>
+                        </div>
+                        <div class="featured-card">
+                            <img src="aerodynamics1.jpeg" alt="Featured Analysis" class="featured-img">
+                            <div class="featured-content">
+                                <span class="featured-tag">Technical</span>
+                                <h3 class="featured-title">Understanding Aerodynamic Changes for the 2025 Season</h3>
+                                <p class="featured-excerpt">Explore the technical regulations and how teams have adapted their designs to maximize performance.</p>
+                                <a href="https://www.formula1.com/en/latest/article/from-fastest-lap-to-increased-rookie-running-7-rule-changes-you-need-to-know.pgdSMDnDyv1aJUgtcKPp6" class="featured-btn">Read Analysis →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- F1 Statistics -->
+            <section class="stat-container">
+                <div class="container">
+                    <h2 class="section-title">2025 Season Statistics</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value animated-stat" data-target="368">0</div>
+                            <div class="stat-label">Overtakes</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value animated-stat" data-target="14">0</div>
+                            <div class="stat-label">Races Completed</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value animated-stat" data-target="812">0</div>
+                            <div class="stat-label">Pit Stops</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value animated-stat" data-target="28">0</div>
+                            <div class="stat-label">Different Leaders</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Driver Cards with Flip Effect -->
+            <section class="quick-links">
+                <div class="container">
+                    <h2 class="section-title">Top Drivers</h2>
+                    <div class="links-grid">
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <img src="hamilton1.jpeg" alt="Lewis Hamilton" style="width:100%;height:100%;object-fit:cover;">
+                                </div>
+                                <div class="flip-card-back">
+                                    <h3>Lewis Hamilton</h3>
+                                    <div class="progress-container">
+                                        <div class="progress-label">
+                                            <span>Qualifying</span>
+                                            <span></span>
+                                        </div>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width:95%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="progress-container">
+                                        <div class="progress-label">
+                                            <span>Race Pace</span>
+                                            <span></span>
+                                        </div>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width:97%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <img src="max1.jpeg" alt="Max Verstappen" style="width:100%;height:100%;object-fit:cover;">
+                                </div>
+                                <div class="flip-card-back">
+                                    <h3>Max Verstappen</h3>
+                                    <div class="progress-container">
+                                        <div class="progress-label">
+                                            <span>Qualifying</span>
+                                            <span>/span>
+                                        </div>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width:98%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="progress-container">
+                                        <div class="progress-label">
+                                            <span>Race Pace</span>
+                                            <span></span>
+                                        </div>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width:96%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <img src="leclerc1.jpeg" alt="Charles Leclerc" style="width:100%;height:100%;object-fit:cover;">
+                                </div>
+                                <div class="flip-card-back">
+                                    <h3>Charles Leclerc</h3>
+                                    <div class="progress-container">
+                                        <div class="progress-label">
+                                            <span>Qualifying</span>
+                                            <span></span>
+                                        </div>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width:96%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="progress-container">
+                                        <div class="progress-label">
+                                            <span>Race Pace</span>
+                                            <span></span>
+                                        </div>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width:94%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Race Simulation -->
+            <section class="race-simulation">
+                <div class="container">
+                    <h2 class="section-title">Live Race Simulation</h2>
+                    <div class="race-container">
+                        <div class="race-header">
+                            <div id="race-status">Press Start to begin simulation</div>
+                            <button id="start-race-btn">Start Race</button>
+                        </div>
+                        <div id="leaderboard">
+                            <div class="driver-position"><span class="position">1</span> Hamilton <span class="lap-time">92.500s</span></div>
+                            <div class="driver-position"><span class="position">2</span> Verstappen <span class="lap-time">92.700s</span></div>
+                            <div class="driver-position"><span class="position">3</span> Leclerc <span class="lap-time">93.100s</span></div>
+                            <div class="driver-position"><span class="position">4</span> Norris <span class="lap-time">93.300s</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Interactive Carousel -->
+            <section class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-slide active">
+                        <h2 class="carousel-title">Formula 1 Technology</h2>
+                        <p class="carousel-text">Explore the cutting-edge technology that powers modern Formula 1 cars, from aerodynamics to hybrid power units.</p>
+                    </div>
+                    <div class="carousel-slide">
+                        <h2 class="carousel-title">Legendary Circuits</h2>
+                        <p class="carousel-text">Discover the history and challenges of the most iconic racing circuits in Formula 1, from Monaco to Spa-Francorchamps.</p>
+                    </div>
+                    <div class="carousel-slide">
+                        <h2 class="carousel-title">Championship Battles</h2>
+                        <p class="carousel-text">Relive the most intense championship battles in F1 history, where titles were decided by mere points or even in the final race.</p>
+                    </div>
+                </div>
+                <div class="carousel-nav">
+                    <button id="prev-slide" class="carousel-btn">←</button>
+                    <button id="next-slide" class="carousel-btn">→</button>
+                </div>
+            </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-column">
+                        <h3>F1 Analysis</h3>
+                        <p>Your comprehensive platform for Formula 1 data analysis, statistics, and insights.</p>
+                        <div class="social-links">
+                            <a href="#" class="social-link">f</a>
+                            <a href="#" class="social-link">t</a>
+                            <a href="#" class="social-link">in</a>
+                            <a href="#" class="social-link">ig</a>
+                        </div>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul class="footer-links">
+                            <li><a href="About F1.html">About F1</a></li>
+                            <li><a href="drivers.html">Drivers</a></li>
+                            <li><a href="Schedule.html">Schedule</a></li>
+                            <li><a href="results.html">Results</a></li>
+                            <li><a href="tickets.html">Tickets</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Support</h3>
+                        <ul class="footer-links">
+                            <li><a href="#">Help Center</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">FAQs</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Newsletter</h3>
+                        <p>Subscribe to our newsletter for the latest F1 news and analysis.</p>
+                        <form class="newsletter-form">
+                            <input type="email" placeholder="Your email" class="newsletter-input">
+                            <button type="submit" class="newsletter-btn">→</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2025 F1 Analysis. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </body>
+    </html>

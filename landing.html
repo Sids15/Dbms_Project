@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 Landing Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Video Background Styles */
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .video-background video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+
+        /* Overlay to ensure text is readable */
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            z-index: -1;
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 4s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .landing-container {
+            background-color: white;
+            width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            animation: fadeIn 1s ease-out;
+            z-index: 1;
+        }
+
+        .landing-header {
+            height: 160px;
+            background: linear-gradient(to right, #e10600, #8b0000);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .red-line {
+            width: 100%;
+            height: 5px;
+            background-color: #e10600; /* F1 red */
+        }
+
+        .landing-content {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .content-title {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .content-text {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .action-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #e10600;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .action-button:hover {
+            background-color: #8b0000;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(225, 6, 0, 0.4);
+        }
+
+        .action-button:active {
+            transform: translateY(0);
+        }
+
+        .login-register-links {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .login-register-links a {
+            color: #e10600;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            margin: 0 10px;
+        }
+
+        .login-register-links a:hover {
+            text-decoration: underline;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Animations for content */
+        .content-animation {
+            animation: slideIn 0.5s ease-out both;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Video Background -->
+    <div class="video-background">
+        <video autoplay muted loop>
+            <source src="landingpagevid.mp4" type="video/mp4">
+            <!-- Add fallback content if needed -->
+            Your browser does not support the video tag.
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+    
+    <div class="stars" id="stars"></div>
+    
+    <div class="landing-container">
+        <div class="landing-header">
+            <img src="f1logo2.jpeg" alt="F1 Header" class="header-image">
+        </div>
+        <div class="red-line"></div>
+
+        <div class="landing-content">
+            <div class="content-title">Welcome to F1 Fan Portal</div>
+            <p class="content-text content-animation">
+                Get exclusive access to race statistics, team information, and connect with other Formula 1 fans around the world.
+            </p>
+            <button class="action-button" id="start-button">START YOUR ENGINES</button>
+            
+        </div>
+    </div>
+    
+    <script>
+        // Create twinkling stars effect
+        function createStars() {
+            const stars = document.getElementById('stars');
+            const count = 100;
+            
+            for(let i = 0; i < count; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                // Random star size between 1 and 3 pixels
+                const size = Math.random() * 2 + 1;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                
+                // Random position
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                star.style.left = `${x}%`;
+                star.style.top = `${y}%`;
+                
+                // Random animation delay
+                star.style.animationDelay = `${Math.random() * 4}s`;
+                
+                stars.appendChild(star);
+            }
+        }
+        
+        // Call function when page loads
+        window.onload = createStars;
+
+        // Add button animation and redirect functionality
+        const actionButton = document.getElementById('start-button');
+        
+        actionButton.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-3px)';
+            this.style.boxShadow = '0 5px 15px rgba(225, 6, 0, 0.4)';
+        });
+        
+        actionButton.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = 'none';
+        });
+        
+        actionButton.addEventListener('click', function() {
+            // Direct redirect to login page with no loading screen
+            window.location.href = '/login';
+        });
+    </script>
+</body>
+</html>

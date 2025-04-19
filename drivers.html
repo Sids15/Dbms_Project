@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>F1 Drivers 2025</title>
+  <style>
+:root {
+            --primary: #e10600;
+            --secondary: #1e1e1e;
+            --light: #f5f5f5;
+            --dark: #15151e;
+            --accent: #00a19b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            /* Added padding-top to account for fixed header */
+            padding-top: 80px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header and Navigation */
+        header {
+            background-color: rgba(21, 21, 30, 0.9);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--light);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white; /* changed to white */
+  color: var(--dark); /* ensure text is readable */
+  min-width: 200px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+        
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s ease;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: white;
+            color: var(--primary);
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .login-btn {
+            background-color: transparent;
+            color: var(--light);
+            border: 1px solid var(--primary);
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .login-btn:hover {
+            background-color: var(--primary);
+            color: var(--light);
+        }
+        
+        /* Hero Section - Full Screen */
+        .hero {
+            height: 100vh;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/api/placeholder/1920/1080') center/cover no-repeat;
+            background-attachment: fixed;
+            z-index: -1;
+        }
+        
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: var(--light);
+            width: 90%;
+            max-width: 900px;
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: var(--light);
+            padding: 15px 40px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+        
+        .hero-btn:hover {
+            background-color: #c00500;
+            transform: translateY(-2px);
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            cursor: pointer;
+        }
+        
+        .scroll-indicator svg {
+            width: 40px;
+            height: 40px;
+            fill: var(--light);
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-20px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+        }
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--light);
+            padding: 60px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            font-size: 0.9rem;
+            color: #999;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-link {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            background-color: #2a2a35;
+            color: var(--light);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 36px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .newsletter-form {
+            display: flex;
+            margin-top: 15px;
+        }
+        
+        .newsletter-input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            outline: none;
+        }
+        
+        .newsletter-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 15px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .newsletter-btn:hover {
+            background-color: #c00500;
+        }
+        
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            .news-grid, .links-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .featured-grid, .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            nav ul {
+                display: none;
+            }
+            .race-card {
+                flex-direction: column;
+            }
+            .race-img {
+                width: 100%;
+            }
+            .news-grid, .links-grid, .featured-grid, .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+                
+        header.scrolled {
+            background-color: rgba(21, 21, 30, 1);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            padding: 10px 0;
+            transition: all 0.3s ease;
+        }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f7f0ef;
+      color: #111;
+    }
+
+    h1 {
+      text-align: center;
+      color: red;
+      font-size: 3rem;
+      margin-top: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+
+    /* Removed standings-buttons class */
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin: 20px;
+      padding-top: 120px;
+    }
+
+    .controls input,
+    .controls select {
+      padding: 10px;
+      border: 2px solid #aaa;
+      border-radius: 6px;
+      width: 250px;
+      font-size: 1rem;
+    }
+
+    .drivers-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 30px;
+      padding: 30px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .driver-card {
+      background-color: #fff;
+      color: #111;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 2px solid red;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 420px;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .driver-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .driver-card img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+    }
+
+    .driver-info {
+      padding: 15px;
+      flex-grow: 1;
+      position: relative;
+    }
+
+    .driver-info h3 {
+      font-size: 1.2rem;
+      margin: 0;
+      font-weight: bold;
+      color: red;
+    }
+
+    .team {
+      font-size: 1rem;
+      margin-top: 5px;
+      display: flex;
+      align-items: center;
+    }
+
+    .team::before {
+      content: '●';
+      margin-right: 6px;
+    }
+
+    .nationality {
+      display: flex;
+      align-items: center;
+      margin-top: 8px;
+      font-size: 0.9rem;
+    }
+
+    .nationality img {
+      width: 20px;
+      height: 14px;
+      margin-right: 8px;
+    }
+
+    .driver-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      position: absolute;
+      bottom: 10px;
+      right: 15px;
+      color: red;
+    }
+
+    .driver-card .info-button {
+      position: absolute;
+      bottom: 10px;
+      left: 15px;
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .driver-card .info-button:hover {
+      background-color: #ff4c4c;
+    }
+    /* Dropdown Container */
+.f1-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Button */
+.f1-dropdown-button {
+    background-color: #343a40; /* Dark background */
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.f1-dropdown-button:hover {
+    background-color: #495057; /* Darker shade on hover */
+}
+
+/* Dropdown Content (Initially Hidden) */
+.f1-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 5px;
+}
+
+/* Links inside the dropdown */
+.f1-dropdown-content a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s;
+}
+
+.f1-dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+/* Show the dropdown content when hovered over the button */
+.f1-dropdown:hover .f1-dropdown-content {
+    display: block;
+}
+
+/* Optional: Add a small arrow pointing down */
+.f1-dropdown-button::after {
+    content: " ▼";
+    font-size: 12px;
+    padding-left: 5px;
+}
+  </style>
+</head>
+<body>
+    
+  <!-- Header & Navigation -->
+  <header>
+    <div class="container header-content">
+        <a href="homepage.html" class="logo">F1 <span>Analysis</span></a>
+        <nav>
+            <ul>
+                <li class="dropdown">
+                    <a href="About F1.html" >About F1</a>
+                    
+                </li>
+                <li class="dropdown">
+                    <a href="#" onclick="showDropdown(event, 'info-dropdown')">F1 Info</a>
+                    <div id="info-dropdown" class="dropdown-content">
+                        <a href="circuits.html">Circuits</a>
+                        <a href="Schedule.html">Schedules</a>
+                        <a href="drivers.html">Drivers</a>
+                        <a href="teams.html">Teams</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="results.html" >Results</a>
+                    
+                    
+                </li>
+                <li><a href="tickets.html">Tickets</a></li>
+            </ul>
+        </nav>
+        <div class="user-actions">
+          <button class="login-btn" onclick="window.location.href='/profile'">Dashboard</button>
+        </div>
+    </div>
+</header>
+
+  <!-- Removed standings buttons -->
+
+  <div class="controls">
+    <input type="text" id="search" placeholder="Search drivers...">
+    <select id="team-filter">
+      <option value="all">All Teams</option>
+    </select>
+    <!-- Removed sort dropdown -->
+  </div>
+
+  <div class="drivers-container" id="drivers-container">
+    <!-- Driver cards inserted here -->
+  </div>
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>F1 Analysis</h3>
+                <p>Your comprehensive platform for Formula 1 data analysis, statistics, and insights.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">f</a>
+                    <a href="#" class="social-link">t</a>
+                    <a href="#" class="social-link">in</a>
+                    <a href="#" class="social-link">ig</a>
+                </div>
+            </div>
+            <div class="footer-column">
+              <h3>Quick Links</h3>
+              <ul class="footer-links">
+                  <li><a href="About F1.html">About F1</a></li>
+                  <li><a href="drivers.html">Drivers</a></li>
+                  <li><a href="Schedule.html">Schedule</a></li>
+                  <li><a href="results.html">Results</a></li>
+                  <li><a href="tickets.html">Tickets</a></li>
+              </ul>
+          </div>
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Newsletter</h3>
+                <p>Subscribe to our newsletter for the latest F1 news and analysis.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Your email" class="newsletter-input">
+                    <button type="submit" class="newsletter-btn">→</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 F1 Analysis. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+  <script>
+    const drivers = [
+      {
+        name: "Max Verstappen",
+        team: "Red Bull Racing",
+        number: 1,
+        country: "Netherlands",
+        flag: "https://flagcdn.com/w40/nl.png",
+        image: "max1.jpeg"
+      },
+      {
+        name: "Lewis Hamilton",
+        team: "Mercedes",
+        number: 44,
+        country: "United Kingdom",
+        flag: "https://flagcdn.com/w40/gb.png",
+        image: "hamilton1.jpeg"
+      },
+      {
+        name: "Charles Leclerc",
+        team: "Ferrari",
+        number: 16,
+        country: "Monaco",
+        flag: "https://flagcdn.com/w40/mc.png",
+        image: "leclerc1.jpeg"
+      },
+      {
+        name: "Lando Norris",
+        team: "McLaren",
+        number: 4,
+        country: "United Kingdom",
+        flag: "https://flagcdn.com/w40/gb.png",
+        image: "lando1.jpeg"
+      },
+      {
+        name: "Fernando Alonso",
+        team: "Aston Martin",
+        number: 14,
+        country: "Spain",
+        flag: "https://flagcdn.com/w40/es.png",
+        image: "alonzo.jpeg"
+      },
+      {
+        name: "Carlos Sainz",
+        team: "Ferrari",
+        number: 55,
+        country: "Spain",
+        flag: "https://flagcdn.com/w40/es.png",
+        image: "sainz.jpeg"
+      },
+      {
+        name: "George Russell",
+        team: "Mercedes",
+        number: 63,
+        country: "United Kingdom",
+        flag: "https://flagcdn.com/w40/gb.png",
+        image: "russel.jpeg"
+      },
+      {
+        name: "Sergio Pérez",
+        team: "Red Bull Racing",
+        number: 11,
+        country: "Mexico",
+        flag: "https://flagcdn.com/w40/mx.png",
+        image: "perez.jpeg"
+      },
+      {
+        name: "Oscar Piastri",
+        team: "McLaren",
+        number: 81,
+        country: "Australia",
+        flag: "https://flagcdn.com/w40/au.png",
+        image: "piastri.jpeg"
+      },
+      {
+        name: "Pierre Gasly",
+        team: "Alpine",
+        number: 10,
+        country: "France",
+        flag: "https://flagcdn.com/w40/fr.png",
+        image: "gasly.jpeg"
+      },
+      {
+        name: "Esteban Ocon",
+        team: "Alpine",
+        number: 31,
+        country: "France",
+        flag: "https://flagcdn.com/w40/fr.png",
+        image: "ocon.jpeg"
+      },
+      {
+        name: "Valtteri Bottas",
+        team: "Sauber",
+        number: 77,
+        country: "Finland",
+        flag: "https://flagcdn.com/w40/fi.png",
+        image: "bottas.jpeg"
+      },
+      {
+        name: "Zhou Guanyu",
+        team: "Sauber",
+        number: 24,
+        country: "China",
+        flag: "https://flagcdn.com/w40/cn.png",
+        image: "ganyu.jpeg"
+      },
+      {
+        name: "Kevin Magnussen",
+        team: "Haas",
+        number: 20,
+        country: "Denmark",
+        flag: "https://flagcdn.com/w40/dk.png",
+        image: "magnessun.jpeg"
+      },
+      {
+        name: "Nico Hülkenberg",
+        team: "Haas",
+        number: 27,
+        country: "Germany",
+        flag: "https://flagcdn.com/w40/de.png",
+        image: "hulkenberg.jpeg"
+      },
+      {
+        name: "Yuki Tsunoda",
+        team: "RB",
+        number: 22,
+        country: "Japan",
+        flag: "https://flagcdn.com/w40/jp.png",
+        image: "yuki.jpeg"
+      },
+      {
+        name: "Daniel Ricciardo",
+        team: "RB",
+        number: 3,
+        country: "Australia",
+        flag: "https://flagcdn.com/w40/au.png",
+        image: "daniel.jpeg"
+      },
+      {
+        name: "Alexander Albon",
+        team: "Williams",
+        number: 23,
+        country: "Thailand",
+        flag: "https://flagcdn.com/w40/th.png",
+        image: "albon.jpeg"
+      },
+      {
+        name: "Logan Sargeant",
+        team: "Williams",
+        number: 2,
+        country: "USA",
+        flag: "https://flagcdn.com/w40/us.png",
+        image: "logan.jpeg"
+      },
+      {
+        name: "Lance Stroll",
+        team: "Aston Martin",
+        number: 18,
+        country: "Canada",
+        flag: "https://flagcdn.com/w40/ca.png",
+        image: "stroll.jpeg"
+      }
+    ];
+
+    const container = document.getElementById("drivers-container");
+    const search = document.getElementById("search");
+    const teamFilter = document.getElementById("team-filter");
+
+    function renderDrivers(list) {
+      container.innerHTML = '';
+      list.forEach(driver => {
+        const card = document.createElement("div");
+        card.className = "driver-card";
+        card.innerHTML = ` 
+          <img src="${driver.image}" alt="${driver.name}">
+          <div class="driver-info">
+            <h3>${driver.name}</h3>
+            <div class="team">${driver.team}</div>
+            <div class="nationality">
+              <img src="${driver.flag}" alt="${driver.country} flag"> ${driver.country}
+            </div>
+            <div class="driver-number">${driver.number}</div>
+            
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function populateTeamFilter() {
+      const teams = [...new Set(drivers.map(d => d.team))];
+      teams.sort();
+      teams.forEach(team => {
+        const option = document.createElement("option");
+        option.value = team;
+        option.textContent = team;
+        teamFilter.appendChild(option);
+      });
+    }
+
+    function update() {
+      let filtered = drivers.filter(d =>
+        d.name.toLowerCase().includes(search.value.toLowerCase()) &&
+        (teamFilter.value === 'all' || d.team === teamFilter.value)
+      );
+
+      // Always sort by name (since we removed the sort dropdown)
+      filtered.sort((a, b) => a.name.localeCompare(b.name));
+
+      renderDrivers(filtered);
+    }
+
+    search.addEventListener("input", update);
+    teamFilter.addEventListener("change", update);
+
+    // Removed event listeners for driver/constructor standings buttons
+
+    populateTeamFilter();
+    renderDrivers(drivers);
+
+    // Sticky Header with scroll effect
+    window.addEventListener('scroll', function() {
+        const header = document.querySelector('header');
+        if (window.scrollY > 100) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+  </script>
+</body>
+</html>

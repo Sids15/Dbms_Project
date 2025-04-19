@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formula 1 Teams - 2024</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        /* Global Styles */
+    body {
+        font-family: 'Titillium Web', 'Helvetica Neue', sans-serif;
+        background-color: #ffffff;
+        margin: 0;
+        padding: 0;
+        color: #15151e;
+    }
+
+    :root {
+        --primary: #e10600;
+        --dark: #15151e;
+        --light: #ffffff;
+        --accent: #00a19c;
+    }
+
+    /* Container */
+    .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Teams Page Styling */
+    .f1-teams-page {
+        padding: 30px 0 60px;
+        margin-top: 80px; /* Added space for fixed header */
+    }
+
+    .f1-section-title {
+        text-align: center;
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 40px;
+        color: #e10600;
+        text-transform: uppercase;
+        position: relative;
+        padding-bottom: 15px;
+    }
+
+    .f1-section-title::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background-color: #e10600;
+    }
+
+    /* Team Cards Container */
+    .f1-teams-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 30px;
+        margin-top: 20px;
+    }
+
+    /* Team Card Styles */
+    .f1-team-card {
+        background-color: #f8f8f8;
+        border-radius: 10px;
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        position: relative;
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeInUp 0.5s forwards;
+    }
+
+    @keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .f1-team-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .f1-team-header {
+        position: relative;
+        height: 150px;
+        overflow: hidden;
+        object-fit: contain;
+    }
+
+    
+
+    .f1-team-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s;
+    }
+
+    .f1-team-card:hover .f1-team-bg {
+        transform: scale(1.1);
+    }
+
+    .f1-team-logo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+        max-width: 70%;
+        max-height: 70px;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        
+    }
+
+    .f1-team-color-bar {
+        height: 6px;
+        position: relative;
+    }
+
+    .f1-team-info {
+        padding: 20px;
+    }
+
+    .f1-team-name {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: #15151e;
+        text-align: center;
+    }
+
+    .f1-team-description {
+        text-align: center;
+        color: #666;
+        margin-bottom: 15px;
+        line-height: 1.4;
+        font-size: 0.9rem;
+    }
+
+    .f1-team-details {
+        margin-bottom: 15px;
+        border-top: 1px solid #e0e0e0;
+        padding-top: 15px;
+    }
+
+    .f1-team-detail {
+        display: flex;
+        margin-bottom: 8px;
+        align-items: center;
+    }
+
+    .f1-team-detail i {
+        width: 25px;
+        color: #e10600;
+        margin-right: 10px;
+    }
+
+    .f1-team-drivers {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        padding: 15px 0;
+        border-top: 1px solid #e0e0e0;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .f1-driver-info {
+        display: flex;
+        align-items: center;
+        flex: 1;
+        max-width: 50%;
+        justify-content: center;
+    }
+
+    .f1-driver-number {
+        font-size: 1.1rem;
+        font-weight: 800;
+        color: #e10600;
+        margin-right: 8px;
+    }
+
+    .f1-driver-name {
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .f1-team-stats {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 15px;
+        margin-bottom: 20px;
+    }
+
+    .f1-team-stat {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        flex: 1;
+    }
+
+    .f1-stat-value {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #e10600;
+    }
+
+    .f1-stat-label {
+        font-size: 0.8rem;
+        color: #666;
+    }
+
+    .f1-team-actions {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .f1-team-action-btn {
+        background-color: #15151e;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .f1-team-action-btn:hover {
+        background-color: #e10600;
+        transform: translateY(-2px);
+    }
+
+/* Team Colors */
+.red-bull-bg { background-color: #0600EF; }
+.mercedes-bg { background-color: #00D2BE; }
+.ferrari-bg { background-color: #DC0000; }
+.aston-martin-bg { background-color: #006F62; }
+.mclaren-bg { background-color: #FF8700; }
+/* Aston Martin */
+.aston-bg {
+    background-color: #00665e; /* British racing green */
+}
+
+/* Alpine */
+.alpine-bg {
+    background-color: #2293d1; /* Alpine blue */
+}
+
+/* Williams */
+.williams-bg {
+    background-color: #005aff; /* Williams blue */
+}
+
+/* RB (Visa Cash App RB) */
+.rb-bg {
+    background-color: #6692ff; /* Light blue tone with darker accents */
+}
+
+/* Stake F1 Team (Kick Sauber) */
+.stake-bg {
+    background: linear-gradient(90deg, #00ff87 0%, #060606 100%); /* Neon green to black */
+}
+
+/* Haas */
+.haas-bg {
+    background-color: #b6babd; /* Silver/gray */
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .f1-teams-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+    
+    .f1-team-drivers {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .f1-driver-info {
+        max-width: 100%;
+        margin-bottom: 5px;
+    }
+}
+
+/* Animations for cards */
+.f1-team-card {
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+}
+
+.f1-team-card:nth-child(1) { animation-delay: 0.1s; }
+.f1-team-card:nth-child(2) { animation-delay: 0.2s; }
+.f1-team-card:nth-child(3) { animation-delay: 0.3s; }
+.f1-team-card:nth-child(4) { animation-delay: 0.4s; }
+.f1-team-card:nth-child(5) { animation-delay: 0.5s; }
+
+/* Header and Navigation - FIXED */
+header {
+    background-color: rgba(21, 21, 30, 0.98); /* More opaque background */
+    padding: 15px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Increased z-index to ensure it's above other elements */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--light);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.logo span {
+    color: var(--primary);
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin-left: 25px;
+    position: relative;
+}
+
+nav ul li a {
+    color: var(--light);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: var(--primary);
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #ffffff; /* Changed to white */
+    min-width: 200px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+    border-radius: 5px;
+    margin-top: 15px;
+    padding: 10px 0;
+}
+
+.dropdown-content a {
+    color: #000000;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: all 0.3s ease;
+}
+
+.dropdown-content a:hover {
+    background-color: #ffffff;
+    color: var(--primary);
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.user-actions {
+    display: flex;
+    align-items: center;
+}
+
+.login-btn {
+    background-color: transparent;
+    color: var(--light);
+    border: 1px solid var(--primary);
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 15px;
+    transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+    background-color: var(--primary);
+    color: var(--light);
+}
+
+/* Hero Section - Full Screen */
+.hero {
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    padding-top: 60px; /* Added to account for fixed header */
+}
+
+.hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure video covers the entire container */
+}
+
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/api/placeholder/1920/1080') center/cover no-repeat;
+    background-attachment: fixed;
+    z-index: 1; /* Ensure it's above video but below content */
+}
+
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: var(--light);
+    width: 90%;
+    max-width: 900px;
+    z-index: 2;
+}
+
+.hero h1 {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero p {
+    font-size: 1.3rem;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.hero-btn {
+    display: inline-block;
+    background-color: var(--primary);
+    color: var(--light);
+    padding: 15px 40px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 20px;
+}
+
+.hero-btn:hover {
+    background-color: #c00500;
+    transform: translateY(-2px);
+}
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: bounce 2s infinite;
+    cursor: pointer;
+    z-index: 3; /* Ensure it's above other elements */
+}
+
+.scroll-indicator svg {
+    width: 40px;
+    height: 40px;
+    fill: var(--light);
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0) translateX(-50%);
+    }
+    40% {
+        transform: translateY(-20px) translateX(-50%);
+    }
+    60% {
+        transform: translateY(-10px) translateX(-50%);
+    }
+}
+
+/* Main Content */
+.main-content {
+    position: relative;
+    z-index: 2; /* Higher than hero background */
+    background-color: var(--light);
+}
+
+/* News Section */
+.news-section {
+    padding: 80px 0 60px;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.2rem;
+    position: relative;
+}
+
+.section-title:after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background-color: var(--primary);
+    margin: 10px auto;
+}
+
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.news-card {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.news-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.news-img {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.news-content {
+    padding: 20px;
+}
+
+.news-date {
+    font-size: 0.8rem;
+    color: #777;
+    margin-bottom: 10px;
+}
+
+.news-title {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.news-excerpt {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.read-more {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.read-more:hover {
+    color: #c00500;
+}
+
+/* Quick Links Section */
+.quick-links {
+    padding: 60px 0;
+    background-color: #f8f8f8;
+}
+
+.links-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.link-card {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.link-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.link-icon {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 20px;
+}
+
+.link-title {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.link-desc {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.link-btn {
+    display: inline-block;
+    background-color: transparent;
+    color: var(--dark);
+    border: 2px solid var(--dark);
+    padding: 8px 20px;
+    border-radius: 4px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.link-btn:hover {
+    background-color: var(--dark);
+    color: white;
+}
+
+/* Upcoming Races */
+.races-section {
+    padding: 60px 0;
+}
+
+.race-card {
+    display: flex;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.race-img {
+    width: 30%;
+    min-height: 200px;
+    object-fit: cover;
+}
+
+.race-details {
+    padding: 20px;
+    flex: 1;
+}
+
+.race-date {
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 10px;
+}
+
+.race-name {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.race-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+}
+
+.info-icon {
+    color: var(--primary);
+    margin-right: 8px;
+    font-size: 1.1rem;
+}
+
+.info-text {
+    font-size: 0.9rem;
+}
+
+.view-race-btn {
+    display: inline-block;
+    background-color: var(--accent);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.view-race-btn:hover {
+    background-color: #008c87;
+}
+
+/* Featured Content Section */
+.featured-section {
+    padding: 60px 0;
+    background-color: var(--dark);
+    color: var(--light);
+}
+
+.featured-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+
+.featured-card {
+    background-color: #2a2a35;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.featured-card:hover {
+    transform: translateY(-5px);
+}
+
+.featured-img {
+    height: 250px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.featured-content {
+    padding: 25px;
+}
+
+.featured-tag {
+    display: inline-block;
+    background-color: var(--primary);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 0.8rem;
+    margin-bottom: 15px;
+}
+
+.featured-title {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: white;
+    font-weight: 600;
+}
+
+.featured-excerpt {
+    color: #bbb;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+}
+
+.featured-btn {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.featured-btn:hover {
+    color: #00ccc3;
+}
+
+/* Footer */
+footer {
+    background-color: var(--dark);
+    color: var(--light);
+    padding: 60px 0 20px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-column h3 {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.footer-column h3:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 40px;
+    height: 3px;
+    background-color: var(--primary);
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0; /* Added to remove default padding */
+    margin: 0; /* Added to remove default margin */
+}
+
+.footer-links li {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: #bbb;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--primary);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid #333;
+    font-size: 0.9rem;
+    color: #999;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.social-link {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    background-color: #2a2a35;
+    color: var(--light);
+    border-radius: 50%;
+    text-align: center;
+    line-height: 36px;
+    transition: all 0.3s ease;
+}
+
+.social-link:hover {
+    background-color: var(--primary);
+    transform: translateY(-3px);
+}
+
+.newsletter-form {
+    display: flex;
+    margin-top: 15px;
+}
+
+.newsletter-input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 4px 0 0 4px;
+    outline: none;
+}
+
+.newsletter-btn {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 0 15px;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.newsletter-btn:hover {
+    background-color: #c00500;
+}
+
+/* Smooth scroll behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Fixed header scrolling behavior */
+header.scrolled {
+    background-color: rgba(21, 21, 30, 1); /* Fully opaque when scrolled */
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    padding: 10px 0;
+    transition: all 0.3s ease;
+}
+
+header.hide-header {
+    top: -100px;
+}
+
+/* Background video */
+.background-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0; /* Behind everything */
+}
+
+/* Additional fixes for content behind header */
+.main-content {
+    padding-top: 80px; /* Give space for the fixed header */
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .hero h1 {
+        font-size: 3rem;
+    }
+    .news-grid, .links-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .featured-grid, .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+    .hero p {
+        font-size: 1rem;
+    }
+    nav ul {
+        display: none;
+    }
+    .race-card {
+        flex-direction: column;
+    }
+    .race-img {
+        width: 100%;
+    }
+    .news-grid, .links-grid, .featured-grid, .footer-content {
+        grid-template-columns: 1fr;
+    }
+}
+    </style>
+    <script>
+        let dropdownTimeout;
+
+function showDropdown(event, id) {
+  event.preventDefault();
+
+  // Close all dropdowns first
+  document.querySelectorAll('.dropdown-content').forEach(drop => {
+    drop.style.display = 'none';
+  });
+
+  // Show selected dropdown
+  const dropdown = document.getElementById(id);
+  dropdown.style.display = 'block';
+
+  clearTimeout(dropdownTimeout);
+  dropdownTimeout = setTimeout(() => {
+    dropdown.style.display = 'none';
+  }, 3000);
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Get all tab buttons and content sections
+  const tabButtons = document.querySelectorAll('.tab-button');
+  const contentSections = document.querySelectorAll('.standings-content');
+  
+  // Add click event listeners to each tab button
+  tabButtons.forEach(button => {
+      button.addEventListener('click', function() {
+          // Remove active class from all buttons
+          tabButtons.forEach(btn => {
+              btn.classList.remove('active');
+          });
+          
+          // Add active class to clicked button
+          this.classList.add('active');
+          
+          // Get the tab name from data attribute
+          const tabName = this.getAttribute('data-tab');
+          
+          // Hide all content sections
+          contentSections.forEach(section => {
+              section.classList.add('hidden');
+          });
+          
+          // Show the corresponding content section
+          document.getElementById(`${tabName}-content`).classList.remove('hidden');
+      });
+  });
+  
+  // Add click event listeners to view more buttons
+  const viewMoreButtons = document.querySelectorAll('.view-more');
+  viewMoreButtons.forEach(button => {
+      button.addEventListener('click', function() {
+          // This would normally navigate to a detailed page
+          // For this example, we'll just show an alert
+          const itemName = this.parentElement.querySelector('strong').textContent;
+          alert(`Viewing details for ${itemName}`);
+      });
+  });
+  
+  // Add click event listeners to full standings buttons
+  const fullStandingsButtons = document.querySelectorAll('.view-full-standings');
+  fullStandingsButtons.forEach(button => {
+      button.addEventListener('click', function() {
+          // Get the current active tab
+          const activeTab = document.querySelector('.tab-button.active').getAttribute('data-tab');
+          alert(`Navigating to full ${activeTab} standings page`);
+          // In a real application, this would redirect to a different page
+          // window.location.href = `/${activeTab}-full.html`;
+      });
+  });
+});
+  // Sticky Header with scroll effect
+  window.addEventListener('scroll', function() {
+      const header = document.querySelector('header');
+      if (window.scrollY > 100) {
+          header.classList.add('scrolled');
+      } else {
+          header.classList.remove('scrolled');
+      }
+  });
+    </script>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container header-content">
+            <a href="homepage.html" class="logo">F1 <span>Analysis</span></a>
+            <nav>
+                <ul>
+                    <li class="dropdown">
+                        <a href="About F1.html" >About F1</a>
+                        
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" onclick="showDropdown(event, 'info-dropdown')">F1 Info</a>
+                        <div id="info-dropdown" class="dropdown-content">
+                            <a href="circuits.html">Circuits</a>
+                            <a href="Schedule.html">Schedules</a>
+                            <a href="drivers.html">Drivers</a>
+                            <a href="teams.html">Teams</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="results.html" >Results</a>
+                        
+                        
+                    </li>
+                    <li><a href="tickets.html">Tickets</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <button class="login-btn" onclick="window.location.href='/profile'">Dashboard</button>
+            </div>
+        </div>
+    </header>
+    <!-- Main Content Section for Teams -->
+    <main class="f1-teams-page">
+        <div class="container">
+            
+            
+            <!-- Teams Grid -->
+            <div class="f1-teams-grid">
+                <!-- Red Bull Racing -->
+                <div class="f1-team-card">
+                    <div class="f1-team-header">
+                        <img src="redcar1.jpeg" alt="Red Bull Racing" class="f1-team-bg">
+                        
+                    </div>
+                    <div class="f1-team-color-bar red-bull-bg"></div>
+                    <div class="f1-team-info">
+                        <h3 class="f1-team-name">Red Bull Racing</h3>
+                        <p class="f1-team-description">The dominant force in F1's current era, known for their aerodynamic excellence.</p>
+                        <div class="f1-team-details">
+                            <div class="f1-team-detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Milton Keynes, United Kingdom</span>
+                            </div>
+                            <div class="f1-team-detail">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>Founded: 2005</span>
+                            </div>
+                            <div class="f1-team-detail">
+                                <i class="fas fa-car-side"></i>
+                                <span>Car: RB20</span>
+                            </div>
+                            <div class="f1-team-detail">
+                                <i class="fas fa-cog"></i>
+                                <span>Honda RBPT Power Unit</span>
+                            </div>
+                        </div>
+                        <div class="f1-team-drivers">
+                            <div class="f1-driver-info">
+                                <span class="f1-driver-number">1</span>
+                                <div class="f1-driver-name">Max Verstappen</div>
+                            </div>
+                            <div class="f1-driver-info">
+                                <span class="f1-driver-number">11</span>
+                                <div class="f1-driver-name">Sergio Perez</div>
+                            </div>
+                        </div>
+                        <div class="f1-team-stats">
+                            <div class="f1-team-stat">
+                                <div class="f1-stat-value">640</div>
+                                <div class="f1-stat-label">Points</div>
+                            </div>
+                            <div class="f1-team-stat">
+                                <div class="f1-stat-value">8</div>
+                                <div class="f1-stat-label">Wins</div>
+                            </div>
+                            <div class="f1-team-stat">
+                                <div class="f1-stat-value">15</div>
+                                <div class="f1-stat-label">Podiums</div>
+                            </div>
+                        </div>
+                        <div class="f1-team-actions">
+                            <a href="https://www.redbullracing.com/int-en" target="_blank" style="text-decoration: none;">
+                            <button class="f1-team-action-btn">
+                                <i class="fas fa-external-link-alt"></i> Visit Site
+                            </button>
+                        </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mercedes -->
+                <div class="f1-team-card">
+                    <div class="f1-team-header">
+                        <img src="merccar.jpeg" alt="Mercedes" class="f1-team-bg">
+                        
+                    </div>
+                    <div class="f1-team-color-bar mercedes-bg"></div>
+                    <div class="f1-team-info">
+                        <h3 class="f1-team-name">Mercedes-AMG F1</h3>
+                        <p class="f1-team-description">The team that dominated the turbo-hybrid era with unprecedented success.</p>
+                        <div class="f1-team-details">
+                            <div class="f1-team-detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Brackley, United Kingdom</span>
+                            </div>
+                            <div class="f1-team-detail">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>Founded: 2010 (Mercedes era)</span>
+                            </div>
+                            <div class="f1-team-detail">
+                                <i class="fas fa-car-side"></i>
+                                <span>Car: W15</span>
+                            </div>
+                            <div class="f1-team-detail">
+                                <i class="fas fa-cog"></i>
+                                <span>Mercedes Power Unit</span>
+                            </div>
+                        </div>
+                        <div class="f1-team-drivers">
+                            <div class="f1-driver-info">
+                                <span class="f1-driver-number">44</span>
+                                <div class="f1-driver-name">Lewis Hamilton</div>
+                            </div>
+                            <div class="f1-driver-info">
+                                <span class="f1-driver-number">63</span>
+                                <div class="f1-driver-name">George Russell</div>
+                            </div>
+                        </div>
+                        <div class="f1-team-stats">
+                            <div class="f1-team-stat">
+                                <div class="f1-stat-value">550</div>
+                                <div class="f1-stat-label">Points</div>
+                            </div>
+                            <div class="f1-team-stat">
+                                <div class="f1-stat-value">5</div>
+                                <div class="f1-stat-label">Wins</div>
+                            </div>
+                            <div class="f1-team-stat">
+                                <div class="f1-stat-value">12</div>
+                                <div class="f1-stat-label">Podiums</div>
+                            </div>
+                        </div>
+                        <div class="f1-team-actions">
+                            <a href="https://www.mercedesamgf1.com/" target="_blank" style="text-decoration: none;">
+                            <button class="f1-team-action-btn">
+                                <i class="fas fa-external-link-alt"></i> Visit Site
+                            </button>
+                        </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Ferrari -->
+                <div class="f1-team-card">
+                    <div class="f1-team-header">
+                        <img src="ferraricar.jpeg" alt="Ferrari" class="f1-team-bg">
+                        
+                    </div>
+                    <div class="f1-team-color-bar ferrari-bg"></div>
+                    <div class="f1-team-info">
+                        <h3 class="f1-team-name">Scuderia Ferrari</h3>
+                        <p class="f1-team-description">The oldest and most successful team in Formula 1 history.</p>
+                        <div class="f1-team-details">
+                            <div class="f1-team-detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Maranello, Italy</span>
+                            </div>
+                            <div class="f1-team-detail">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>Founded: 1950</span>
+                            </div>
+                            <div class="f1-team-detail">
+                                <i class="fas fa-car-side"></i>
+                                <span>Car: SF-24</span>
+                            </div>
+                            <div class="f1-team-detail">
+                                <i class="fas fa-cog"></i>
+                                <span>Ferrari Power Unit</span>
+                            </div>
+                        </div>
+                        <div class="f1-team-drivers">
+                            <div class="f1-driver-info">
+                                <span class="f1-driver-number">16</span>
+                                <div class="f1-driver-name">Charles Leclerc</div>
+                            </div>
+                            <div class="f1-driver-info">
+                                <span class="f1-driver-number">55</span>
+                                <div class="f1-driver-name">Carlos Sainz</div>
+                            </div>
+                        </div>
+                        <div class="f1-team-stats">
+                            <div class="f1-team-stat">
+                                <div class="f1-stat-value">420</div>
+                                <div class="f1-stat-label">Points</div>
+                            </div>
+                            <div class="f1-team-stat">
+                                <div class="f1-stat-value">3</div>
+                                <div class="f1-stat-label">Wins</div>
+                            </div>
+                            <div class="f1-team-stat">
+                                <div class="f1-stat-value">10</div>
+                                <div class="f1-stat-label">Podiums</div>
+                            </div>
+                        </div>
+                        <div class="f1-team-actions">
+                            <a href="https://www.ferrari.com/en-EN/formula1" target="_blank" style="text-decoration: none;">
+                            <button class="f1-team-action-btn">
+                                <i class="fas fa-external-link-alt"></i> Visit Site
+                            </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- McLaren -->
+                <div class="f1-team-card">
+                    <div class="f1-team-header">
+                        <img src="mclarencar.jpeg" alt="McLaren" class="f1-team-bg">
+                        
+                    </div>
+                    <div class="f1-team-color-bar mclaren-bg"></div>
+                    <div class="f1-team-info">
+                        <h3 class="f1-team-name">McLaren F1 Team</h3>
+                        <p class="f1-team-description">A historic team known for innovation and engineering excellence.</p>
+                        <div class="f1-team-details">
+                            <div class="f1-team-detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Woking, United Kingdom</span>
+                            </div>
+                            <div class="f1-team-detail">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>Founded: 1966</span>
+                            </div>
+                            <div class="f1-team-detail">
+                                <i class="fas fa-car-side"></i>
+                                <span>Car: MCL38</span>
+                            </div>
+                            <div class="f1-team-detail">
+                                <i class="fas fa-cog"></i>
+                                <span>Mercedes Power Unit</span>
+                            </div>
+                        </div>
+                        <div class="f1-team-drivers">
+                            <div class="f1-driver-info">
+                                <span class="f1-driver-number">4</span>
+                                <div class="f1-driver-name">Lando Norris</div>
+                            </div>
+                            <div class="f1-driver-info">
+                                <span class="f1-driver-number">81</span>
+                                <div class="f1-driver-name">Oscar Piastri</div>
+                            </div>
+                        </div>
+                        <div class="f1-team-stats">
+                            <div class="f1-team-stat">
+                                <div class="f1-stat-value">380</div>
+                                <div class="f1-stat-label">Points</div>
+                            </div>
+                            <div class="f1-team-stat">
+                                <div class="f1-stat-value">2</div>
+                                <div class="f1-stat-label">Wins</div>
+                            </div>
+                            <div class="f1-team-stat">
+                                <div class="f1-stat-value">9</div>
+                                <div class="f1-stat-label">Podiums</div>
+                            </div>
+                        </div>
+                        <div class="f1-team-actions">
+                            <a href="https://www.mclaren.com/racing/" target="_blank" style="text-decoration: none;">
+                            <button class="f1-team-action-btn">
+                                <i class="fas fa-external-link-alt"></i> Visit Site
+                            </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Aston Martin -->
+<div class="f1-team-card">
+    <div class="f1-team-header">
+        <img src="astonmartincar.jpeg" alt="Aston Martin" class="f1-team-bg">
+        
+    </div>
+    <div class="f1-team-color-bar aston-bg"></div>
+    <div class="f1-team-info">
+        <h3 class="f1-team-name">Aston Martin Aramco</h3>
+        <p class="f1-team-description">A team on the rise with strong ambition and a championship-winning driver.</p>
+        <div class="f1-team-details">
+            <div class="f1-team-detail"><i class="fas fa-map-marker-alt"></i><span>Silverstone, United Kingdom</span></div>
+            <div class="f1-team-detail"><i class="fas fa-calendar-alt"></i><span>Founded: 2021</span></div>
+            <div class="f1-team-detail"><i class="fas fa-car-side"></i><span>Car: AMR24</span></div>
+            <div class="f1-team-detail"><i class="fas fa-cog"></i><span>Mercedes Power Unit</span></div>
+        </div>
+        <div class="f1-team-drivers">
+            <div class="f1-driver-info"><span class="f1-driver-number">14</span><div class="f1-driver-name">Fernando Alonso</div></div>
+            <div class="f1-driver-info"><span class="f1-driver-number">18</span><div class="f1-driver-name">Lance Stroll</div></div>
+        </div>
+        <div class="f1-team-stats">
+            <div class="f1-team-stat"><div class="f1-stat-value">280</div><div class="f1-stat-label">Points</div></div>
+            <div class="f1-team-stat"><div class="f1-stat-value">0</div><div class="f1-stat-label">Wins</div></div>
+            <div class="f1-team-stat"><div class="f1-stat-value">6</div><div class="f1-stat-label">Podiums</div></div>
+        </div>
+        <div class="f1-team-actions">
+            <a href="https://www.astonmartinf1.com/en-GB/" target="_blank" style="text-decoration: none;">
+            <button class="f1-team-action-btn"><i class="fas fa-external-link-alt"></i> Visit Site</button>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Alpine -->
+<div class="f1-team-card">
+    <div class="f1-team-header">
+        <img src="alpinecar.jpeg" alt="Alpine" class="f1-team-bg">
+        
+    </div>
+    <div class="f1-team-color-bar alpine-bg"></div>
+    <div class="f1-team-info">
+        <h3 class="f1-team-name">BWT Alpine F1 Team</h3>
+        <p class="f1-team-description">France’s factory effort with a focus on long-term growth.</p>
+        <div class="f1-team-details">
+            <div class="f1-team-detail"><i class="fas fa-map-marker-alt"></i><span>Enstone, United Kingdom</span></div>
+            <div class="f1-team-detail"><i class="fas fa-calendar-alt"></i><span>Founded: 2021</span></div>
+            <div class="f1-team-detail"><i class="fas fa-car-side"></i><span>Car: A524</span></div>
+            <div class="f1-team-detail"><i class="fas fa-cog"></i><span>Renault Power Unit</span></div>
+        </div>
+        <div class="f1-team-drivers">
+            <div class="f1-driver-info"><span class="f1-driver-number">31</span><div class="f1-driver-name">Esteban Ocon</div></div>
+            <div class="f1-driver-info"><span class="f1-driver-number">10</span><div class="f1-driver-name">Pierre Gasly</div></div>
+        </div>
+        <div class="f1-team-stats">
+            <div class="f1-team-stat"><div class="f1-stat-value">120</div><div class="f1-stat-label">Points</div></div>
+            <div class="f1-team-stat"><div class="f1-stat-value">0</div><div class="f1-stat-label">Wins</div></div>
+            <div class="f1-team-stat"><div class="f1-stat-value">1</div><div class="f1-stat-label">Podiums</div></div>
+        </div>
+        <div class="f1-team-actions">
+            <a href="https://www.alpinef1.com/" target="_blank" style="text-decoration: none;">
+            <button class="f1-team-action-btn"><i class="fas fa-external-link-alt"></i> Visit Site</button>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Williams -->
+<div class="f1-team-card">
+    <div class="f1-team-header">
+        <img src="williamscar.jpeg" alt="Williams" class="f1-team-bg">
+        
+    </div>
+    <div class="f1-team-color-bar williams-bg"></div>
+    <div class="f1-team-info">
+        <h3 class="f1-team-name">Williams Racing</h3>
+        <p class="f1-team-description">A historic name in F1 aiming for a strong comeback.</p>
+        <div class="f1-team-details">
+            <div class="f1-team-detail"><i class="fas fa-map-marker-alt"></i><span>Grove, United Kingdom</span></div>
+            <div class="f1-team-detail"><i class="fas fa-calendar-alt"></i><span>Founded: 1977</span></div>
+            <div class="f1-team-detail"><i class="fas fa-car-side"></i><span>Car: FW46</span></div>
+            <div class="f1-team-detail"><i class="fas fa-cog"></i><span>Mercedes Power Unit</span></div>
+        </div>
+        <div class="f1-team-drivers">
+            <div class="f1-driver-info"><span class="f1-driver-number">23</span><div class="f1-driver-name">Alexander Albon</div></div>
+            <div class="f1-driver-info"><span class="f1-driver-number">2</span><div class="f1-driver-name">Logan Sargeant</div></div>
+        </div>
+        <div class="f1-team-stats">
+            <div class="f1-team-stat"><div class="f1-stat-value">28</div><div class="f1-stat-label">Points</div></div>
+            <div class="f1-team-stat"><div class="f1-stat-value">0</div><div class="f1-stat-label">Wins</div></div>
+            <div class="f1-team-stat"><div class="f1-stat-value">0</div><div class="f1-stat-label">Podiums</div></div>
+        </div>
+        <div class="f1-team-actions">
+            <a href="https://www.williamsf1.com/?srsltid=AfmBOop5lIdGgeFJJaj4AvriTCTugCuphABalEGedHtcR1tL70d2SPUl" target="_blank" style="text-decoration: none;">
+            <button class="f1-team-action-btn"><i class="fas fa-external-link-alt"></i> Visit Site</button>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- RB (Visa Cash App RB) -->
+<div class="f1-team-card">
+    <div class="f1-team-header">
+        <img src="visarb.jpeg" alt="RB F1 Team" class="f1-team-bg">
+        
+    </div>
+    <div class="f1-team-color-bar rb-bg"></div>
+    <div class="f1-team-info">
+        <h3 class="f1-team-name">Visa Cash App RB</h3>
+        <p class="f1-team-description">Red Bull’s sister team with a new look and experienced leadership.</p>
+        <div class="f1-team-details">
+            <div class="f1-team-detail"><i class="fas fa-map-marker-alt"></i><span>Faenza, Italy</span></div>
+            <div class="f1-team-detail"><i class="fas fa-calendar-alt"></i><span>Founded: 2006</span></div>
+            <div class="f1-team-detail"><i class="fas fa-car-side"></i><span>Car: VCARB 01</span></div>
+            <div class="f1-team-detail"><i class="fas fa-cog"></i><span>Honda RBPT Power Unit</span></div>
+        </div>
+        <div class="f1-team-drivers">
+            <div class="f1-driver-info"><span class="f1-driver-number">3</span><div class="f1-driver-name">Daniel Ricciardo</div></div>
+            <div class="f1-driver-info"><span class="f1-driver-number">22</span><div class="f1-driver-name">Yuki Tsunoda</div></div>
+        </div>
+        <div class="f1-team-stats">
+            <div class="f1-team-stat"><div class="f1-stat-value">25</div><div class="f1-stat-label">Points</div></div>
+            <div class="f1-team-stat"><div class="f1-stat-value">0</div><div class="f1-stat-label">Wins</div></div>
+            <div class="f1-team-stat"><div class="f1-stat-value">0</div><div class="f1-stat-label">Podiums</div></div>
+        </div>
+        <div class="f1-team-actions">
+            <a href="https://www.visacashapprb.com/int-en" target="_blank" style="text-decoration: none;">
+            <button class="f1-team-action-btn"><i class="fas fa-external-link-alt"></i> Visit Site</button>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Stake F1 Team (Kick Sauber) -->
+<div class="f1-team-card">
+    <div class="f1-team-header">
+        <img src="stakecar.jpeg" alt="Stake F1 Team" class="f1-team-bg">
+        
+    </div>
+    <div class="f1-team-color-bar stake-bg"></div>
+    <div class="f1-team-info">
+        <h3 class="f1-team-name">Stake F1 Team Kick Sauber</h3>
+        <p class="f1-team-description">New branding for a historic team building for the Audi future.</p>
+        <div class="f1-team-details">
+            <div class="f1-team-detail"><i class="fas fa-map-marker-alt"></i><span>Hinwil, Switzerland</span></div>
+            <div class="f1-team-detail"><i class="fas fa-calendar-alt"></i><span>Founded: 1993</span></div>
+            <div class="f1-team-detail"><i class="fas fa-car-side"></i><span>Car: C44</span></div>
+            <div class="f1-team-detail"><i class="fas fa-cog"></i><span>Ferrari Power Unit</span></div>
+        </div>
+        <div class="f1-team-drivers">
+            <div class="f1-driver-info"><span class="f1-driver-number">77</span><div class="f1-driver-name">Valtteri Bottas</div></div>
+            <div class="f1-driver-info"><span class="f1-driver-number">24</span><div class="f1-driver-name">Zhou Guanyu</div></div>
+        </div>
+        <div class="f1-team-stats">
+            <div class="f1-team-stat"><div class="f1-stat-value">9</div><div class="f1-stat-label">Points</div></div>
+            <div class="f1-team-stat"><div class="f1-stat-value">0</div><div class="f1-stat-label">Wins</div></div>
+            <div class="f1-team-stat"><div class="f1-stat-value">0</div><div class="f1-stat-label">Podiums</div></div>
+        </div>
+        <div class="f1-team-actions">
+            <a href="https://stake.com/sponsorships/stake-f1-team" target="_blank" style="text-decoration: none;">
+            <button class="f1-team-action-btn"><i class="fas fa-external-link-alt"></i> Visit Site</button>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Haas -->
+<div class="f1-team-card">
+    <div class="f1-team-header">
+        <img src="haascar.jpeg" alt="Haas" class="f1-team-bg">
+        
+    </div>
+    <div class="f1-team-color-bar haas-bg"></div>
+    <div class="f1-team-info">
+        <h3 class="f1-team-name">MoneyGram Haas F1 Team</h3>
+        <p class="f1-team-description">America’s only F1 team continuing to fight in the midfield.</p>
+        <div class="f1-team-details">
+            <div class="f1-team-detail"><i class="fas fa-map-marker-alt"></i><span>Kannapolis, USA</span></div>
+            <div class="f1-team-detail"><i class="fas fa-calendar-alt"></i><span>Founded: 2016</span></div>
+            <div class="f1-team-detail"><i class="fas fa-car-side"></i><span>Car: VF-24</span></div>
+            <div class="f1-team-detail"><i class="fas fa-cog"></i><span>Ferrari Power Unit</span></div>
+        </div>
+        <div class="f1-team-drivers">
+            <div class="f1-driver-info"><span class="f1-driver-number">20</span><div class="f1-driver-name">Kevin Magnussen</div></div>
+            <div class="f1-driver-info"><span class="f1-driver-number">27</span><div class="f1-driver-name">Nico Hülkenberg</div></div>
+        </div>
+        <div class="f1-team-stats">
+            <div class="f1-team-stat"><div class="f1-stat-value">12</div><div class="f1-stat-label">Points</div></div>
+            <div class="f1-team-stat"><div class="f1-stat-value">0</div><div class="f1-stat-label">Wins</div></div>
+            <div class="f1-team-stat"><div class="f1-stat-value">0</div><div class="f1-stat-label">Podiums</div></div>
+        </div>
+        <div class="f1-team-actions">
+            <a href="https://www.haasf1team.com/" target="_blank" style="text-decoration: none;">
+            <button class="f1-team-action-btn"><i class="fas fa-external-link-alt"></i> Visit Site</button>
+        </a>
+    </div>
+    </div>
+</div>
+
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>F1 Analysis</h3>
+                    <p>Your comprehensive platform for Formula 1 data analysis, statistics, and insights.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">f</a>
+                        <a href="#" class="social-link">t</a>
+                        <a href="#" class="social-link">in</a>
+                        <a href="#" class="social-link">ig</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="About F1.html">About F1</a></li>
+                        <li><a href="drivers.html">Drivers</a></li>
+                        <li><a href="Schedule.html">Schedule</a></li>
+                        <li><a href="results.html">Results</a></li>
+                        <li><a href="tickets.html">Tickets</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Newsletter</h3>
+                    <p>Subscribe to our newsletter for the latest F1 news and analysis.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your email" class="newsletter-input">
+                        <button type="submit" class="newsletter-btn">→</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 F1 Analysis. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

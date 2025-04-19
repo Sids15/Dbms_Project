@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 2025 Race Schedule</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <style>
+        :root {
+            --primary: #ce1126;
+            --primary-dark: #a30d1f;
+            --secondary: #111111;
+            --light: #f8f8f8;
+            --text: #222222;
+            --shadow: rgba(0,0,0,0.1);
+            --shadow-hover: rgba(0,0,0,0.2);
+            --dark: #15151e; /* Added missing dark variable */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* Header and Navigation */
+        header {
+            background-color: rgba(21, 21, 30, 0.9);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000; /* Increased z-index value */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--light);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        /* Fixed dropdown styling */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff; /* Changed from dark color to light for better contrast */
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1500; /* Higher than header */
+            border-radius: 5px;
+            margin-top: 10px;
+            top: 100%;
+            left: 0;
+            padding: 10px;
+        }
+        
+        .dropdown-content a {
+            color: #333; /* Darker text for better visibility */
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s ease;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #eee;
+            color: var(--primary);
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .login-btn {
+            background-color: transparent;
+            color: var(--light);
+            border: 1px solid var(--primary);
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background-color: var(--primary);
+            color: var(--light);
+        }
+
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            background-color: var(--secondary);
+            padding: 15px;
+            position: sticky;
+            top: 56px; /* Adjusted to account for fixed header height */
+            z-index: 100;
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        .filter-tab {
+            background: none;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .filter-tab:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .filter-tab.active {
+            background-color: var(--primary);
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            padding: 20px 0;
+            background-color: #fff;
+            border-bottom: 1px solid #eee;
+            margin-top: 68px; /* Added top margin to fix spacing */
+        }
+
+        .search-box {
+            display: flex;
+            width: 80%;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid #ddd;
+            border-radius: 30px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(206, 17, 38, 0.2);
+        }
+
+        .search-button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .calendar-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            padding: 40px;
+            animation: fadeInUp 1.5s ease-in-out;
+        }
+
+        .race-card {
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px var(--shadow);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .race-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 12px 35px var(--shadow-hover);
+        }
+
+        .race-card.completed {
+            opacity: 0.7;
+        }
+
+        .race-card.upcoming {
+            border: 2px solid var(--primary);
+        }
+
+        .race-flag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 30px;
+            height: 20px;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .race-card h3 {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: #fff;
+            margin: 0;
+            padding: 18px 15px;
+            font-size: 1.3rem;
+            position: relative;
+        }
+
+        .race-card .race-number {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--secondary);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+            z-index: 1;
+        }
+
+        .race-details {
+            padding: 25px;
+        }
+
+        .race-details p {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .race-details i {
+            color: var(--primary);
+            margin-right: 10px;
+            width: 20px;
+        }
+
+        .race-status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .status-completed {
+            background-color: #e0e0e0;
+            color: #555;
+        }
+
+        .status-upcoming {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-next {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .circuit-image {
+            width: 100%;
+            height: 120px;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin-top: 15px;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .race-card:hover .circuit-image {
+            opacity: 1;
+        }
+
+        .view-details-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            text-align: center;
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            margin-top: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .view-details-btn:hover {
+            background-color: #333;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 2000; /* Increased z-index */
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            animation: zoomIn 0.3s ease;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 20px;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .close:hover {
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal-footer {
+            padding: 20px;
+            display: flex;
+            justify-content: flex-end;
+            border-top: 1px solid #eee;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .circuit-map {
+            width: 100%;
+            height: 240px;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .race-info h4 {
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .info-item {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .info-item i {
+            color: var(--primary);
+            margin-right: 10px;
+            width: 20px;
+        }
+
+        footer {
+            background-color: var(--dark);
+            color: white;
+            
+            padding: 30px;
+            margin-top: 40px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            font-size: 0.9rem;
+            color: #999;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-link {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            background-color: #2a2a35;
+            color: var(--light);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 36px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .newsletter-form {
+            display: flex;
+            margin-top: 15px;
+        }
+        
+        .newsletter-input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            outline: none;
+        }
+        
+        .newsletter-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 15px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .newsletter-btn:hover {
+            background-color: #c00500;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1500;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            background-color: var(--primary-dark);
+        }
+        
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Dropdown styling */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Animation keyframes */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Tooltip styles */
+        .tooltip {
+            position: absolute;
+            background-color: #333;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            z-index: 2000;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+                
+        header.scrolled {
+            background-color: rgba(21, 21, 30, 1);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            padding: 10px 0;
+            transition: all 0.3s ease;
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            .news-grid, .links-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .featured-grid, .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            nav ul {
+                display: none;
+            }
+            .race-card {
+                flex-direction: column;
+            }
+            .race-img {
+                width: 100%;
+            }
+            .news-grid, .links-grid, .featured-grid, .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .calendar-container {
+                padding: 20px;
+                gap: 20px;
+            }
+            
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-tabs {
+                overflow-x: auto;
+                justify-content: flex-start;
+                padding: 10px;
+            }
+            
+            .filter-tab {
+                padding: 8px 15px;
+                margin: 0 5px;
+                font-size: 0.9rem;
+                flex-shrink: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container header-content">
+            <a href="homepage.html" class="logo">F1 <span>Analysis</span></a>
+            <nav>
+                <ul>
+                    <li class="dropdown">
+                        <a href="About F1.html" >About F1</a>
+                        
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" onclick="showDropdown(event, 'info-dropdown')">F1 Info</a>
+                        <div id="info-dropdown" class="dropdown-content">
+                            <a href="circuits.html">Circuits</a>
+                            <a href="Schedule.html">Schedules</a>
+                            <a href="drivers.html">Drivers</a>
+                            <a href="teams.html">Teams</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="results.html" >Results</a>
+                        
+                        
+                    </li>
+                    <li><a href="tickets.html">Tickets</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <button class="login-btn" onclick="window.location.href='/profile'">Dashboard</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Rest of your content would go here -->
+
+    <!-- JavaScript -->
+    <script>
+        let dropdownTimeout;
+
+        function showDropdown(event, id) {
+            event.preventDefault();
+
+            // Close all dropdowns first
+            document.querySelectorAll('.dropdown-content').forEach(drop => {
+                drop.style.display = 'none';
+            });
+
+            // Show selected dropdown
+            const dropdown = document.getElementById(id);
+            dropdown.style.display = 'block';
+
+            clearTimeout(dropdownTimeout);
+            dropdownTimeout = setTimeout(() => {
+                dropdown.style.display = 'none';
+            }, 3000);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all tab buttons and content sections
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const contentSections = document.querySelectorAll('.standings-content');
+            
+            // Add click event listeners to each tab button
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    tabButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Get the tab name from data attribute
+                    const tabName = this.getAttribute('data-tab');
+                    
+                    // Hide all content sections
+                    contentSections.forEach(section => {
+                        section.classList.add('hidden');
+                    });
+                    
+                    // Show the corresponding content section
+                    document.getElementById(`${tabName}-content`).classList.remove('hidden');
+                });
+            });
+            
+            // Add click event listeners to view more buttons
+            const viewMoreButtons = document.querySelectorAll('.view-more');
+            viewMoreButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // This would normally navigate to a detailed page
+                    // For this example, we'll just show an alert
+                    const itemName = this.parentElement.querySelector('strong').textContent;
+                    alert(`Viewing details for ${itemName}`);
+                });
+            });
+            
+            // Add click event listeners to full standings buttons
+            const fullStandingsButtons = document.querySelectorAll('.view-full-standings');
+            fullStandingsButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Get the current active tab
+                    const activeTab = document.querySelector('.tab-button.active').getAttribute('data-tab');
+                    alert(`Navigating to full ${activeTab} standings page`);
+                    // In a real application, this would redirect to a different page
+                    // window.location.href = `/${activeTab}-full.html`;
+                });
+            });
+            
+            // Sticky Header with scroll effect
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('header');
+                if (window.scrollY > 100) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+            
+            // Countdown Timer for Next Race
+            function updateCountdown() {
+                const nextRaceDate = new Date('March 5, 2025 14:00:00').getTime();
+                const now = new Date().getTime();
+                const timeLeft = nextRaceDate - now;
+                
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                
+                const countdownDaysEl = document.getElementById('countdown-days');
+                const countdownHoursEl = document.getElementById('countdown-hours');
+                const countdownMinutesEl = document.getElementById('countdown-minutes');
+                const countdownSecondsEl = document.getElementById('countdown-seconds');
+                
+                if (countdownDaysEl) countdownDaysEl.innerText = days;
+                if (countdownHoursEl) countdownHoursEl.innerText = hours;
+                if (countdownMinutesEl) countdownMinutesEl.innerText = minutes;
+                if (countdownSecondsEl) countdownSecondsEl.innerText = seconds;
+            }
+            
+            // Live Race Simulation
+            let lapCounter = 1;
+            const maxLaps = 10;
+            const drivers = [
+                { name: 'Hamilton', position: 1, lapTime: 92.5, variation: 0.5 },
+                { name: 'Verstappen', position: 2, lapTime: 92.7, variation: 0.6 },
+                { name: 'Leclerc', position: 3, lapTime: 93.1, variation: 0.4 },
+                { name: 'Norris', position: 4, lapTime: 93.3, variation: 0.7 }
+            ];
+            
+            function simulateLap() {
+                if (lapCounter > maxLaps) {
+                    const raceStatusEl = document.getElementById('race-status');
+                    if (raceStatusEl) raceStatusEl.innerText = 'Race Finished!';
+                    return;
+                }
+                
+                // Simulate random lap times with variation
+                drivers.forEach(driver => {
+                    driver.lapTime = driver.lapTime + (Math.random() * driver.variation * 2 - driver.variation);
+                });
+                
+                // Sort drivers by current position and lap times
+                drivers.sort((a, b) => a.lapTime - b.lapTime);
+                
+                // Update positions
+                drivers.forEach((driver, index) => {
+                    driver.position = index + 1;
+                });
+                
+                // Update the DOM
+                const raceStatusEl = document.getElementById('race-status');
+                const leaderboardEl = document.getElementById('leaderboard');
+                
+                if (raceStatusEl) raceStatusEl.innerText = `Lap ${lapCounter} of ${maxLaps}`;
+                
+                if (leaderboardEl) {
+                    leaderboardEl.innerHTML = '';
+                    
+                    drivers.forEach(driver => {
+                        const driverEl = document.createElement('div');
+                        driverEl.className = 'driver-position';
+                        driverEl.innerHTML = `<span class="position">${driver.position}</span> ${driver.name} <span class="lap-time">${driver.lapTime.toFixed(3)}s</span>`;
+                        leaderboardEl.appendChild(driverEl);
+                    });
+                }
+                
+                lapCounter++;
+                
+                // Schedule next lap
+                setTimeout(simulateLap, 3000);
+            }
+            
+            // Start countdown if elements exist
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+            
+            // Initialize race simulation if button exists
+            const startRaceBtn = document.getElementById('start-race-btn');
+            if (startRaceBtn) {
+                startRaceBtn.addEventListener('click', function() {
+                    this.disabled = true;
+                    simulateLap();
+                });
+            }
+            
+            // Initialize carousel if elements exist
+            const nextSlideBtn = document.getElementById('next-slide');
+            const prevSlideBtn = document.getElementById('prev-slide');
+            const slides = document.querySelectorAll('.carousel-slide');
+            
+            if (nextSlideBtn && prevSlideBtn && slides.length > 0) {
+                let currentSlide = 0;
+                const totalSlides = slides.length;
+                
+                nextSlideBtn.addEventListener('click', function() {
+                    slides[currentSlide].classList.remove('active');
+                    currentSlide = (currentSlide + 1) % totalSlides;
+                    slides[currentSlide].classList.add('active');
+                });
+                
+                prevSlideBtn.addEventListener('click', function() {
+                    slides[currentSlide].classList.remove('active');
+                    currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+                    slides[currentSlide].classList.add('active');
+                });
+            }
+            
+            // Initialize data animations
+            const statElements = document.querySelectorAll('.animated-stat');
+            statElements.forEach(el => {
+                const target = parseInt(el.getAttribute('data-target'));
+                const duration = 2000; // ms
+                const step = target / (duration / 16);
+                let current = 0;
+                
+                const updateStat = () => {
+                    current += step;
+                    if (current < target) {
+                        el.textContent = Math.floor(current);
+                        requestAnimationFrame(updateStat);
+                    } else {
+                        el.textContent = target;
+                    }
+                };
+                
+                // Start animation when element is in viewport
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            updateStat();
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                });
+                
+                observer.observe(el);
+            });
+        });
+        
+        // Tooltip functionality
+        const tooltips = document.querySelectorAll('[data-tooltip]');
+        tooltips.forEach(tooltip => {
+            tooltip.addEventListener('mouseenter', function() {
+                const tooltipText = this.getAttribute('data-tooltip');
+                const tooltipEl = document.createElement('div');
+                tooltipEl.className = 'tooltip';
+                tooltipEl.textContent = tooltipText;
+                document.body.appendChild(tooltipEl);
+                
+                const rect = this.getBoundingClientRect();
+                tooltipEl.style.top = `${rect.bottom + window.scrollY + 10}px`;
+                tooltipEl.style.left = `${rect.left + window.scrollX}px`;
+            });
+            
+            tooltip.addEventListener('mouseleave', function() {
+                const tooltipEl = document.querySelector('.tooltip');
+                if (tooltipEl) tooltipEl.remove();
+            });
+        });
+    </script>
+        
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container header-content">
+            <a href="homepage.html" class="logo">F1 <span>Analysis</span></a>
+            <nav>
+                <ul>
+                    <li class="dropdown">
+                        <a href="About F1.html" >About F1</a>
+                        
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" onclick="showDropdown(event, 'info-dropdown')">F1 Info</a>
+                        <div id="info-dropdown" class="dropdown-content">
+                            <a href="circuits.html">Circuits</a>
+                            <a href="Schedule.html">Schedules</a>
+                            <a href="drivers.html">Drivers</a>
+                            <a href="teams.html">Teams</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="results.html" >Results</a>
+                        
+                        
+                    </li>
+                    <li><a href="tickets.html">Tickets</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <button class="login-btn">Dashboard</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="filter-tabs">
+        <button class="filter-tab active" data-filter="all">All Races</button>
+        <button class="filter-tab" data-filter="completed">Completed</button>
+        <button class="filter-tab" data-filter="upcoming">Upcoming</button>
+        <button class="filter-tab" data-filter="next">Next Race</button>
+    </div>
+
+    <div class="search-container">
+        <div class="search-box">
+            <input type="text" class="search-input" placeholder="Search races by name, location or circuit...">
+            <button class="search-button">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+
+    <section class="calendar-container">
+        <!-- Race Cards will be dynamically generated here -->
+    </section>
+
+    <div class="modal" id="raceModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Race Details</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="detail-grid">
+                    <div class="circuit-map" id="modalCircuitMap"></div>
+                    <div class="race-info">
+                        <h4>Race Information</h4>
+                        <div class="info-item">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span id="modalDate"></span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-clock"></i>
+                            <span id="modalTime"></span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-road"></i>
+                            <span id="modalCircuit"></span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span id="modalLocation"></span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-ruler-horizontal"></i>
+                            <span id="modalLength"></span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-flag-checkered"></i>
+                            <span id="modalLaps"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="view-details-btn" id="closeModal">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <a href="#" class="back-to-top">
+        <i class="fas fa-chevron-up"></i>
+    </a>
+
+   
+
+    <script>
+        
+        // Race data for 2025 season (projected data)
+        const races = [
+            {
+                id: 1,
+                name: "Bahrain Grand Prix",
+                date: "March 2, 2025",
+                time: "18:00 local time",
+                circuit: "Bahrain International Circuit",
+                location: "Sakhir, Bahrain",
+                length: "5.412 km",
+                laps: 57,
+                status: "completed",
+                winner: "Max Verstappen",
+                circuitImageUrl: "bharaingp.png"
+            },
+            {
+                id: 2,
+                name: "Saudi Arabian Grand Prix",
+                date: "March 9, 2025",
+                time: "20:00 local time",
+                circuit: "Jeddah Corniche Circuit",
+                location: "Jeddah, Saudi Arabia",
+                length: "6.174 km",
+                laps: 50,
+                status: "completed",
+                winner: "Charles Leclerc",
+                circuitImageUrl: "saudigp.png"
+            },
+            {
+                id: 3,
+                name: "Australian Grand Prix",
+                date: "March 23, 2025",
+                time: "15:00 local time",
+                circuit: "Albert Park Circuit",
+                location: "Melbourne, Australia",
+                length: "5.303 km",
+                laps: 58,
+                status: "completed",
+                winner: "Lando Norris",
+                circuitImageUrl: "australiangp.png"
+            },
+            {
+                id: 4,
+                name: "Japanese Grand Prix",
+                date: "April 13, 2025",
+                time: "14:00 local time",
+                circuit: "Suzuka Circuit",
+                location: "Suzuka, Japan",
+                length: "5.807 km",
+                laps: 53,
+                status: "upcoming",
+                winner: "",
+                circuitImageUrl: "japanesegp.png"
+            },
+            {
+                id: 5,
+                name: "Chinese Grand Prix",
+                date: "April 20, 2025",
+                time: "14:00 local time",
+                circuit: "Shanghai International Circuit",
+                location: "Shanghai, China",
+                length: "5.451 km",
+                laps: 56,
+                status: "upcoming",
+                winner: "",
+                circuitImageUrl: "chinesegp.png"
+            },
+            {
+                id: 6,
+                name: "Miami Grand Prix",
+                date: "May 4, 2025",
+                time: "15:30 local time",
+                circuit: "Miami International Autodrome",
+                location: "Miami, Florida, USA",
+                length: "5.412 km",
+                laps: 57,
+                status: "upcoming",
+                winner: "",
+                circuitImageUrl: "miamigp.png"
+            },
+            {
+                id: 7,
+                name: "Emilia Romagna Grand Prix",
+                date: "May 18, 2025",
+                time: "15:00 local time",
+                circuit: "Autodromo Enzo e Dino Ferrari",
+                location: "Imola, Italy",
+                length: "4.909 km",
+                laps: 63,
+                status: "upcoming",
+                winner: "",
+                circuitImageUrl: "emiliagp.png"
+            },
+            {
+                id: 8,
+                name: "Monaco Grand Prix",
+                date: "May 25, 2025",
+                time: "15:00 local time",
+                circuit: "Circuit de Monaco",
+                location: "Monte Carlo, Monaco",
+                length: "3.337 km",
+                laps: 78,
+                status: "upcoming",
+                winner: "",
+                circuitImageUrl: "monacogp.png"
+            },
+            {
+                id: 9,
+                name: "Canadian Grand Prix",
+                date: "June 8, 2025",
+                time: "14:00 local time",
+                circuit: "Circuit Gilles Villeneuve",
+                location: "Montreal, Canada",
+                length: "4.361 km",
+                laps: 70,
+                status: "upcoming",
+                winner: "",
+                circuitImageUrl: "canndiangp.png"
+            },
+            {
+                id: 10,
+                name: "Spanish Grand Prix",
+                date: "June 22, 2025",
+                time: "15:00 local time",
+                circuit: "Circuit de Barcelona-Catalunya",
+                location: "Montmeló, Spain",
+                length: "4.675 km",
+                laps: 66,
+                status: "upcoming",
+                winner: "",
+                circuitImageUrl: "spanishgp.png" 
+            },
+            {
+                id: 11, 
+                name: "Austrian Grand Prix",
+                date: "June 29, 2025",
+                time: "15:00 local time",
+                circuit: "Red Bull Ring",
+                location: "Spielberg, Austria",
+                length: "4.318 km",
+                laps: 71,
+                status: "upcoming",
+                winner: "",
+                circuitImageUrl: "austriagp.png"
+            },
+            {
+                id: 12,
+                name: "British Grand Prix",
+                date: "July 6, 2025",
+                time: "15:00 local time",
+                circuit: "Silverstone Circuit",
+                location: "Silverstone, United Kingdom",
+                length: "5.891 km",
+                laps: 52,
+                status: "upcoming",
+                winner: "",
+                circuitImageUrl: "britishgp.png"
+            },
+            {
+    id: 13,
+    name: "Hungarian Grand Prix",
+    date: "July 20, 2025",
+    time: "15:00 local time",
+    circuit: "Hungaroring",
+    location: "Budapest, Hungary",
+    length: "4.381 km",
+    laps: 70,
+    status: "upcoming",
+    winner: "",
+    circuitImageUrl: "hungariangp.png"
+},
+{
+    id: 14,
+    name: "Belgian Grand Prix",
+    date: "August 3, 2025",
+    time: "15:00 local time",
+    circuit: "Circuit de Spa-Francorchamps",
+    location: "Stavelot, Belgium",
+    length: "7.004 km",
+    laps: 44,
+    status: "upcoming",
+    winner: "",
+    circuitImageUrl: "belgiangp.png"
+},
+{
+    id: 15,
+    name: "Dutch Grand Prix",
+    date: "August 24, 2025",
+    time: "15:00 local time",
+    circuit: "Circuit Zandvoort",
+    location: "Zandvoort, Netherlands",
+    length: "4.259 km",
+    laps: 72,
+    status: "upcoming",
+    winner: "",
+    circuitImageUrl: "dutchgp.png"
+},
+{
+    id: 16,
+    name: "Italian Grand Prix",
+    date: "August 31, 2025",
+    time: "15:00 local time",
+    circuit: "Monza Circuit",
+    location: "Monza, Italy",
+    length: "5.793 km",
+    laps: 53,
+    status: "upcoming",
+    winner: "",
+    circuitImageUrl: "italiangp.png"
+},
+{
+    id: 17,
+    name: "Singapore Grand Prix",
+    date: "September 21, 2025",
+    time: "20:00 local time",
+    circuit: "Marina Bay Street Circuit",
+    location: "Singapore",
+    length: "5.063 km",
+    laps: 61,
+    status: "upcoming",
+    winner: "",
+    circuitImageUrl: "singaporegp.png"
+},
+{
+    id: 18,
+    name: "United States Grand Prix",
+    date: "October 5, 2025",
+    time: "14:00 local time",
+    circuit: "Circuit of the Americas",
+    location: "Austin, Texas, USA",
+    length: "5.513 km",
+    laps: 56,
+    status: "upcoming",
+    winner: "",
+    circuitImageUrl: "usagp.png"
+},
+{
+    id: 19,
+    name: "Mexico City Grand Prix",
+    date: "October 19, 2025",
+    time: "14:00 local time",
+    circuit: "Autódromo Hermanos Rodríguez",
+    location: "Mexico City, Mexico",
+    length: "4.304 km",
+    laps: 71,
+    status: "upcoming",
+    winner: "",
+    circuitImageUrl: "mexicangp.png"
+},
+{
+    id: 20,
+    name: "Brazilian Grand Prix",
+    date: "November 2, 2025",
+    time: "14:00 local time",
+    circuit: "Interlagos Circuit",
+    location: "São Paulo, Brazil",
+    length: "4.309 km",
+    laps: 71,
+    status: "upcoming",
+    winner: "",
+    circuitImageUrl: "braziliangp.png"
+},
+{
+    id: 21,
+    name: "Las Vegas Grand Prix",
+    date: "November 15, 2025",
+    time: "22:00 local time",
+    circuit: "Las Vegas Street Circuit",
+    location: "Las Vegas, Nevada, USA",
+    length: "6.120 km",
+    laps: 50,
+    status: "upcoming",
+    winner: "",
+    circuitImageUrl: "lagp.png"
+},
+{
+    id: 22,
+    name: "Qatar Grand Prix",
+    date: "November 23, 2025",
+    time: "20:00 local time",
+    circuit: "Lusail International Circuit",
+    location: "Lusail, Qatar",
+    length: "5.419 km",
+    laps: 57,
+    status: "upcoming",
+    winner: "",
+    circuitImageUrl: "qatargp.png"
+},
+{
+    id: 23,
+    name: "Abu Dhabi Grand Prix",
+    date: "December 7, 2025",
+    time: "17:00 local time",
+    circuit: "Yas Marina Circuit",
+    location: "Abu Dhabi, UAE",
+    length: "5.281 km",
+    laps: 58,
+    status: "upcoming",
+    winner: "",
+    circuitImageUrl: "abudabhigp.png"
+}
+
+        ];
+
+        // Set the next race
+        const currentDate = new Date("April 8, 2025");
+        let nextRaceIndex = 0;
+
+        for (let i = 0; i < races.length; i++) {
+            const raceDate = new Date(races[i].date);
+            if (raceDate > currentDate) {
+                nextRaceIndex = i;
+                races[i].status = "next";
+                break;
+            }
+        }
+
+        // Create race cards
+        function createRaceCards(filteredRaces = races) {
+            const container = document.querySelector('.calendar-container');
+            container.innerHTML = '';
+
+            if (filteredRaces.length === 0) {
+                container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 50px;"><h3>No races found matching your search criteria</h3></div>';
+                return;
+            }
+
+            filteredRaces.forEach(race => {
+                const card = document.createElement('div');
+                card.className = `race-card ${race.status}`;
+                card.setAttribute('data-id', race.id);
+
+                let statusLabel = '';
+                if (race.status === 'completed') {
+                    statusLabel = `<span class="race-status status-completed">Completed</span>`;
+                } else if (race.status === 'next') {
+                    statusLabel = `<span class="race-status status-next">Next Race</span>`;
+                } else {
+                    statusLabel = `<span class="race-status status-upcoming">Upcoming</span>`;
+                }
+
+                let winnerInfo = '';
+                if (race.status === 'completed' && race.winner) {
+                    winnerInfo = `<p><i class="fas fa-trophy"></i> <strong>Winner:</strong> ${race.winner}</p>`;
+                }
+
+                card.innerHTML = `
+                    <h3>
+                        ${race.name}
+                        <span class="race-number">${race.id}</span>
+                    </h3>
+                    <div class="race-details">
+                        <p><i class="fas fa-calendar-alt"></i> <strong>Date:</strong> ${race.date}</p>
+                        <p><i class="fas fa-road"></i> <strong>Circuit:</strong> ${race.circuit}</p>
+                        <p><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong> ${race.location}</p>
+                        ${winnerInfo}
+                        ${statusLabel}
+                        <div class="circuit-image" style="background-image: url('${race.circuitImageUrl}')"></div>
+                        <button class="view-details-btn">View Details</button>
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+
+            // Add event listeners to the new cards
+            document.querySelectorAll('.view-details-btn').forEach(btn => {
+                btn.addEventListener('click', openModal);
+            });
+        }
+
+        // Filter races
+        function filterRaces(filter) {
+            let filteredRaces;
+            
+            switch(filter) {
+                case 'completed':
+                    filteredRaces = races.filter(race => race.status === 'completed');
+                    break;
+                case 'upcoming':
+                    filteredRaces = races.filter(race => race.status === 'upcoming' || race.status === 'next');
+                    break;
+                case 'next':
+                    filteredRaces = races.filter(race => race.status === 'next');
+                    break;
+                default:
+                    filteredRaces = races;
+            }
+
+            createRaceCards(filteredRaces);
+        }
+
+        // Search races
+        function searchRaces(query) {
+            query = query.toLowerCase();
+            const filteredRaces = races.filter(race => 
+                race.name.toLowerCase().includes(query) || 
+                race.circuit.toLowerCase().includes(query) || 
+                race.location.toLowerCase().includes(query)
+            );
+            createRaceCards(filteredRaces);
+        }
+
+        // Open modal with race details
+        function openModal(event) {
+            const card = event.target.closest('.race-card');
+            const raceId = parseInt(card.getAttribute('data-id'));
+            const race = races.find(r => r.id === raceId);
+            
+            document.getElementById('modalTitle').textContent = race.name;
+            document.getElementById('modalDate').textContent = race.date;
+            document.getElementById('modalTime').textContent = race.time;
+            document.getElementById('modalCircuit').textContent = race.circuit;
+            document.getElementById('modalLocation').textContent = race.location;
+            document.getElementById('modalLength').textContent = race.length;
+            document.getElementById('modalLaps').textContent = `${race.laps} laps`;
+            
+            document.getElementById('modalCircuitMap').style.backgroundImage = `url('${race.circuitImageUrl}')`;
+            
+            document.getElementById('raceModal').style.display = 'flex';
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('raceModal').style.display = 'none';
+        }
+
+        // Initialize the page
+        function init() {
+            // Create initial race cards
+            createRaceCards();
+            
+            // Set up filter tab event listeners
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    filterRaces(tab.getAttribute('data-filter'));
+                });
+            });
+            
+            // Set up search functionality
+            const searchInput = document.querySelector('.search-input');
+            const searchButton = document.querySelector('.search-button');
+            
+            searchButton.addEventListener('click', () => {
+                searchRaces(searchInput.value);
+            });
+            
+            searchInput.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    searchRaces(searchInput.value);
+                }
+            });
+            
+            // Set up modal close functionality
+            document.querySelector('.close').addEventListener('click', closeModal);
+            document.getElementById('closeModal').addEventListener('click', closeModal);
+            
+            window.addEventListener('click', (e) => {
+                if (e.target === document.getElementById('raceModal')) {
+                    closeModal();
+                }
+            });
+            
+            // Back to top button functionality
+            const backToTopBtn = document.querySelector('.back-to-top');
+            
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            });
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+
+
+        
+    </script>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>F1 Analysis</h3>
+                    <p>Your comprehensive platform for Formula 1 data analysis, statistics, and insights.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">f</a>
+                        <a href="#" class="social-link">t</a>
+                        <a href="#" class="social-link">in</a>
+                        <a href="#" class="social-link">ig</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="About F1.html">About F1</a></li>
+                        <li><a href="drivers.html">Drivers</a></li>
+                        <li><a href="Schedule.html">Schedule</a></li>
+                        <li><a href="results.html">Results</a></li>
+                        <li><a href="tickets.html">Tickets</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Newsletter</h3>
+                    <p>Subscribe to our newsletter for the latest F1 news and analysis.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your email" class="newsletter-input">
+                        <button type="submit" class="newsletter-btn">→</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 F1 Analysis. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+
+<script>
+    
+</script>
+</html>

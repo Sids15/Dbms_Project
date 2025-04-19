@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 Login Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Video Background Styles */
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .video-background video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+
+        /* Overlay to ensure text is readable */
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            z-index: -1;
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 4s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .login-container {
+            background-color: white;
+            width: 360px;
+            border-radius: 10px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            animation: fadeIn 1s ease-out;
+            z-index: 1;
+        }
+
+        .login-header {
+            height: 160px;
+            background: linear-gradient(to right, #e10600, #8b0000);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mountains {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 70%;
+        }
+
+        .mountain {
+            position: absolute;
+            bottom: 0;
+            background: rgba(139, 0, 0, 0.8);
+            clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+        }
+
+        .sun {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: #ffb997;
+            border-radius: 50%;
+            top: 30px;
+            right: 30px;
+            box-shadow: 0 0 20px rgba(255, 185, 151, 0.7);
+            animation: pulseSun 3s infinite alternate;
+        }
+
+        @keyframes pulseSun {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        .login-form {
+            padding: 30px;
+        }
+
+        .form-title {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 24px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: none;
+            background-color: #ffeeee;
+            border-radius: 50px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus {
+            box-shadow: 0 0 0 2px #e10600;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #e10600;
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .forgot-password {
+            color: #e10600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #e10600;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .login-btn:hover {
+            background-color: #8b0000;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(225, 6, 0, 0.4);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .create-account {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .create-account a {
+            color: #e10600;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .create-account a:hover {
+            text-decoration: underline;
+        }
+        .header-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* This makes the image cover the area nicely */
+            display: block;
+        }
+        .red-line {
+            width: 100%;
+            height: 5px;
+            background-color: #e10600; /* F1 red */
+        }
+
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Animations for input fields */
+        .input-animation {
+            animation: slideIn 0.5s ease-out both;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Adding animation delay for staggered effect */
+        .input-group:nth-child(1) { animation-delay: 0.2s; }
+        .input-group:nth-child(2) { animation-delay: 0.4s; }
+        .remember-forgot { animation: fadeIn 0.5s ease-out 0.6s both; }
+        .login-btn { animation: fadeIn 0.5s ease-out 0.8s both; }
+        .create-account { animation: fadeIn 0.5s ease-out 1s both; }
+    </style>
+</head>
+<body>
+    <!-- Video Background -->
+    <div class="video-background">
+        <video autoplay muted loop>
+            <source src="landingpagevid.mp4" type="video/mp4">
+            <!-- Add fallback content if needed -->
+            Your browser does not support the video tag.
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+    
+    <div class="stars" id="stars"></div>
+    
+    <div class="login-container">
+        <div class="login-header">
+            <img src="f1logo2.jpeg" alt="F1 Header" class="header-image"> 
+        </div>
+        <div class="red-line"></div>
+
+        <div class="login-form">
+            <div class="form-title">Login</div>
+            <form action="/login" method="POST">
+                <div class="input-group input-animation">
+                    
+                    <input type="email" id="email" name="email" required placeholder="Email">
+                </div>
+                <div class="input-group input-animation">
+                    
+                    <input type="password" id="password" name="password" required placeholder="Password">
+                </div>
+                
+                <button type="submit" class="login-btn">Login</button>
+                <div class="create-account">
+                    <span>Don't have an account? </span>
+                    <a href="/register" class="register-link">Register</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Add interactive effects to form elements
+        const inputs = document.querySelectorAll('input[type="email"], input[type="password"]');
+        
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.style.transform = 'scale(1.02)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+
+        const loginBtn = document.querySelector('.login-btn');
+        
+        loginBtn.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-3px)';
+        });
+        
+        loginBtn.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+        });
+        
+        const form = document.getElementById('login-form');
+
+form.addEventListener('submit', function (event) {
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    if (!email || !password) {
+        event.preventDefault(); // Prevent form submission
+        alert('Please fill in all fields.');
+    }
+});
+
+// Handle login form submission
+document.getElementById("loginForm").addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    fetch('/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+    })
+        .then((response) => {
+            if (response.ok) {
+                return response.json(); // Parse the JSON response
+            } else {
+                throw new Error("Login failed.");
+            }
+        })
+        .then((data) => {
+            // Store user data in localStorage
+            localStorage.setItem("user", JSON.stringify(data));
+            // Redirect to profile page
+            window.location.href = "/profile";
+        })
+        .catch((error) => {
+            console.error("Error during login:", error);
+            alert("Invalid email or password.");
+        });
+});
+        
+    </script>
+</body>
+</html>

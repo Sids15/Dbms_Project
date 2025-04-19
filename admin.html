@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #10141e;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #1c1f26;
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header h1 {
+            font-size: 28px;
+            margin: 0;
+        }
+
+        .logout-btn {
+            background-color: #e10600;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .logout-btn:hover {
+            background-color: #c00400;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            gap: 15px;
+        }
+
+        .nav-buttons button {
+            background-color: #1c1f26;
+            color: white;
+            border: 2px solid #e10600;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .nav-buttons button.active, .nav-buttons button:hover {
+            background-color: #e10600;
+            color: white;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        .section {
+            display: none;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #1c1f26;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section h2 {
+            color: #e10600;
+            margin-bottom: 15px;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .card {
+            background: #15151e;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            color: white;
+            flex: 0 1 calc(33.333% - 20px);
+            box-sizing: border-box;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .card h3 {
+            margin: 0 0 10px;
+            color: #e10600;
+        }
+
+        .card h3 {
+            margin: 0;
+            color: #e10600;
+        }
+
+        .delete-btn {
+            background-color: #e10600;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            background-color: #c00400;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        form input, form select, form textarea, form button {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: #1c1f26;
+            color: white;
+        }
+
+        form button {
+            background-color: #e10600;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        form button:hover {
+            background-color: #c00400;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Admin Panel</h1>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </header>
+
+    <div class="nav-buttons">
+        <button class="active" onclick="showSection('add-race')">Add Race</button>
+        <button onclick="showSection('view-bookings')">View Bookings</button>
+        <button onclick="showSection('manage-races')">Manage Races</button>
+    </div>
+
+    <div class="container">
+        <!-- Section: Add Race -->
+        <div class="section active" id="add-race">
+            <h2>Add New Race</h2>
+            <form id="add-race-form">
+                <input type="text" id="race-name" placeholder="Race Name" required>
+                <input type="text" id="race-location" placeholder="Location" required>
+                <input type="date" id="race-date" required>
+                <textarea id="race-description" placeholder="Description" rows="4"></textarea>
+                <button type="submit">Add Race</button>
+            </form>
+        </div>
+
+        <!-- Section: View Bookings -->
+        <div class="section" id="view-bookings">
+            <h2>All Booked Tickets</h2>
+            <div id="tickets-container"></div>
+        </div>
+
+        <!-- Section: Manage Races -->
+        <div class="section" id="manage-races">
+            <h2>All Races</h2>
+            <div id="races-container"></div>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+            // Remove active class from all buttons
+            document.querySelectorAll('.nav-buttons button').forEach(button => button.classList.remove('active'));
+            // Show the selected section
+            document.getElementById(sectionId).classList.add('active');
+            // Highlight the corresponding button
+            event.target.classList.add('active');
+        }
+
+        // Fetch and display tickets
+        function fetchTickets() {
+            fetch('/api/admin/tickets')
+                .then(response => response.json())
+                .then(data => {
+                    const ticketsContainer = document.getElementById("tickets-container");
+                    ticketsContainer.innerHTML = "";
+                    data.forEach(ticket => {
+                        const card = document.createElement("div");
+                        card.classList.add("card");
+                        card.innerHTML = `
+                            <h3>Race: ${ticket.race}</h3>
+                            <h3>Name: ${ticket.race_name}</h3>
+                            <p>Seats: ${ticket.seats}</p>
+                            <p>Agency: ${ticket.agency}</p>
+                            <button class="delete-btn" onclick="deleteTicket(${ticket.id})">Delete</button>
+                        `;
+                        ticketsContainer.appendChild(card);
+                    });
+                });
+        }
+
+        // Delete ticket
+        function deleteTicket(id) {
+            fetch(`/api/admin/tickets/${id}`, { method: "DELETE" })
+                .then(() => fetchTickets());
+        }
+
+        // Fetch and display races
+        function fetchRaces() {
+            fetch('/api/admin/races')
+                .then(response => response.json())
+                .then(data => {
+                    const racesContainer = document.getElementById("races-container");
+                    racesContainer.innerHTML = "";
+                    data.forEach(race => {
+                        const card = document.createElement("div");
+                        card.classList.add("card");
+                        card.innerHTML = `
+                            <h3>${race.name}</h3>
+                            <p>Location: ${race.location}</p>
+                            <p>Date: ${new Date(race.date).toLocaleDateString()}</p>
+                            <p>${race.description}</p>
+                            <button class="delete-btn" onclick="deleteRace(${race.id})">Delete</button>
+                        `;
+                        racesContainer.appendChild(card);
+                    });
+                });
+        }
+
+        // Delete race
+        function deleteRace(id) {
+            fetch(`/api/admin/races/${id}`, { method: "DELETE" })
+                .then(() => { fetchRaces(); });
+        }
+
+        // Add race
+        document.getElementById("add-race-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const name = document.getElementById("race-name").value;
+            const location = document.getElementById("race-location").value;
+            const date = document.getElementById("race-date").value;
+            const description = document.getElementById("race-description").value;
+
+            fetch('/api/admin/races', {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, location, date, description })
+            }).then(() => {
+                fetchRaces();
+                this.reset();
+            });
+        });
+
+        function logout() {
+            fetch('/logout', {
+                method: 'POST'
+            })
+            .then((response) => {
+                if (response.ok) {
+                    alert("Logged out successfully!");
+                    window.location.href = "/login"; // Redirect to the login page
+                } else {
+                    alert("Failed to log out. Please try again.");
+                }
+            })
+            .catch((error) => {
+                console.error("Error logging out:", error);
+                alert("An error occurred. Please try again.");
+            });
+        }
+
+        // Initialize
+        fetchTickets();
+        fetchRaces();
+    </script>
+</body>
+</html>

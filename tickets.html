@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 Analysis - Tickets</title>
+    <style>
+        :root {
+            --primary: #e10600;
+            --secondary: #1e1e1e;
+            --light: #f5f5f5;
+            --dark: #15151e;
+            --accent: #00a19b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header and Navigation */
+        header {
+            background-color: rgba(21, 21, 30, 0.9);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--light);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s ease;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: white ;
+            color: black;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .login-btn {
+            background-color: transparent;
+            color: var(--light);
+            border: 1px solid var(--primary);
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .login-btn:hover {
+            background-color: var(--primary);
+            color: var(--light);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding-top: 100px;
+            min-height: calc(100vh - 400px);
+        }
+
+        /* Tickets Section */
+        .tickets-section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.2rem;
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary);
+            margin: 10px auto;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        .tickets-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .tickets-info {
+            flex: 1;
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .tickets-form {
+            flex: 1;
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(0, 161, 155, 0.2);
+        }
+
+        .submit-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            background-color: #c00500;
+        }
+
+        .ticket-info-item {
+            margin-bottom: 25px;
+        }
+
+        .ticket-info-item h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .ticket-info-item p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .ticket-prices {
+            margin-top: 10px;
+        }
+
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px dashed #ddd;
+        }
+
+        .price-item:last-child {
+            border-bottom: none;
+        }
+
+        .price-type {
+            font-weight: 600;
+        }
+
+        .price-value {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Circuit image */
+        .circuit-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--light);
+            padding: 60px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            font-size: 0.9rem;
+            color: #999;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-link {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            background-color: #2a2a35;
+            color: var(--light);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 36px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .newsletter-form {
+            display: flex;
+            margin-top: 15px;
+        }
+        
+        .newsletter-input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            outline: none;
+        }
+        
+        .newsletter-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 15px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .newsletter-btn:hover {
+            background-color: #c00500;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .tickets-container {
+                flex-direction: column;
+            }
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <script>
+        let dropdownTimeout;
+
+function showDropdown(event, id) {
+  event.preventDefault();
+
+  // Close all dropdowns first
+  document.querySelectorAll('.dropdown-content').forEach(drop => {
+    drop.style.display = 'none';
+  });
+
+  // Show selected dropdown
+  const dropdown = document.getElementById(id);
+  dropdown.style.display = 'block';
+
+  clearTimeout(dropdownTimeout);
+  dropdownTimeout = setTimeout(() => {
+    dropdown.style.display = 'none';
+  }, 3000);
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Get all tab buttons and content sections
+  const tabButtons = document.querySelectorAll('.tab-button');
+  const contentSections = document.querySelectorAll('.standings-content');
+  
+  // Add click event listeners to each tab button
+  tabButtons.forEach(button => {
+      button.addEventListener('click', function() {
+          // Remove active class from all buttons
+          tabButtons.forEach(btn => {
+              btn.classList.remove('active');
+          });
+          
+          // Add active class to clicked button
+          this.classList.add('active');
+          
+          // Get the tab name from data attribute
+          const tabName = this.getAttribute('data-tab');
+          
+          // Hide all content sections
+          contentSections.forEach(section => {
+              section.classList.add('hidden');
+          });
+          
+          // Show the corresponding content section
+          document.getElementById(`${tabName}-content`).classList.remove('hidden');
+      });
+  });
+  
+  // Add click event listeners to view more buttons
+  const viewMoreButtons = document.querySelectorAll('.view-more');
+  viewMoreButtons.forEach(button => {
+      button.addEventListener('click', function() {
+          // This would normally navigate to a detailed page
+          // For this example, we'll just show an alert
+          const itemName = this.parentElement.querySelector('strong').textContent;
+          alert(`Viewing details for ${itemName}`);
+      });
+  });
+  
+  // Add click event listeners to full standings buttons
+  const fullStandingsButtons = document.querySelectorAll('.view-full-standings');
+  fullStandingsButtons.forEach(button => {
+      button.addEventListener('click', function() {
+          // Get the current active tab
+          const activeTab = document.querySelector('.tab-button.active').getAttribute('data-tab');
+          alert(`Navigating to full ${activeTab} standings page`);
+          // In a real application, this would redirect to a different page
+          // window.location.href = `/${activeTab}-full.html`;
+      });
+  });
+});
+  // Sticky Header with scroll effect
+  window.addEventListener('scroll', function() {
+      const header = document.querySelector('header');
+      if (window.scrollY > 100) {
+          header.classList.add('scrolled');
+      } else {
+          header.classList.remove('scrolled');
+      }
+  });
+
+  // Fetch races and populate the dropdown
+function fetchRacesForDropdown() {
+    fetch('/api/races')
+        .then((response) => response.json())
+        .then((races) => {
+            const raceDropdown = document.getElementById("race");
+            raceDropdown.innerHTML = '<option value="" disabled selected>Choose a Grand Prix</option>';
+            races.forEach((race) => {
+                const option = document.createElement("option");
+                option.value = race.id;
+                option.textContent = `${race.name} (${race.location}, ${new Date(race.date).toLocaleDateString()})`;
+                raceDropdown.appendChild(option);
+            });
+        })
+        .catch((error) => console.error("Error fetching races:", error));
+}
+
+// Call the function when the page loads
+document.addEventListener("DOMContentLoaded", fetchRacesForDropdown);
+    </script>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container header-content">
+            <a href="homepage.html" class="logo">F1 <span>Analysis</span></a>
+            <nav>
+                <ul>
+                    <li class="dropdown">
+                        <a href="About F1.html" >About F1</a>
+                        
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" onclick="showDropdown(event, 'info-dropdown')">F1 Info</a>
+                        <div id="info-dropdown" class="dropdown-content">
+                            <a href="circuits.html">Circuits</a>
+                            <a href="Schedule.html">Schedules</a>
+                            <a href="drivers.html">Drivers</a>
+                            <a href="teams.html">Teams</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="results.html" >Results</a>
+                        
+                        
+                    </li>
+                    <li><a href="tickets.html">Tickets</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <button class="login-btn" onclick="window.location.href='/profile'">Dashboard</button>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <section class="tickets-section">
+            <div class="container">
+                <h2 class="section-title">F1 Grand Prix Tickets</h2>
+                <p class="section-subtitle">Secure your seats for the 2025 Formula 1 season with official tickets</p>
+                
+                <div class="tickets-container">
+                    <div class="tickets-info">
+                        <img src="/api/placeholder/600/300" alt="F1 Circuit" class="circuit-image">
+                        
+                        <div class="ticket-info-item">
+                            <h4>2025 Formula 1 Season Tickets</h4>
+                            <p>Experience the thrill of Formula 1 live at the circuits with our official ticket packages. Choose from various seating options including VIP experiences, track seats, normal seating, and accessible options for those with special requirements.</p>
+                        </div>
+                        
+                        <div class="ticket-info-item">
+                            <h4>Ticket Options</h4>
+                            <div class="ticket-prices">
+                                <div class="price-item">
+                                    <span class="price-type">VIP Experience</span>
+                                    <span class="price-value">From $1,500</span>
+                                </div>
+                                <div class="price-item">
+                                    <span class="price-type">Track Seats</span>
+                                    <span class="price-value">From $800</span>
+                                </div>
+                                <div class="price-item">
+                                    <span class="price-type">Normal Seating</span>
+                                    <span class="price-value">From $350</span>
+                                </div>
+                                <div class="price-item">
+                                    <span class="price-type">Handicapped Accessible</span>
+                                    <span class="price-value">From $350</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="ticket-info-item">
+                            <h4>Important Information</h4>
+                            <p>• Tickets are subject to availability</p>
+                            <p>• Children under 12 must be accompanied by an adult</p>
+                            <p>• All prices include taxes and fees</p>
+                            <p>• Cancellation policy applies</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tickets-form">
+                        <h3>Reserve Your Tickets</h3>
+                        <p>Fill out the form below to reserve your tickets. Our team will contact you with payment details.</p>
+                        
+                        <form action="/reserve-tickets" method="POST">
+                            <div class="form-group">
+                                <label for="name">Full Name</label>
+                                <input type="text" id="name" name="name" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" name="email" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="race">Select Race</label>
+                                <select id="race" name="race" class="form-control" required>
+                                    <option value="" disabled selected>Choose a Grand Prix</option>
+                                    <option value="bahrain">Bahrain Grand Prix (Mar 5-7, 2025)</option>
+                                    <option value="saudi">Saudi Arabian Grand Prix (Mar 12-14, 2025)</option>
+                                    <option value="australia">Australian Grand Prix (Mar 26-28, 2025)</option>
+                                    <option value="japan">Japanese Grand Prix (Apr 9-11, 2025)</option>
+                                    <option value="china">Chinese Grand Prix (Apr 16-18, 2025)</option>
+                                    <option value="miami">Miami Grand Prix (May 7-9, 2025)</option>
+                                    <option value="imola">Emilia Romagna Grand Prix (May 21-23, 2025)</option>
+                                    <option value="monaco">Monaco Grand Prix (May 28-30, 2025)</option>
+                                    <option value="canada">Canadian Grand Prix (Jun 11-13, 2025)</option>
+                                    <option value="spain">Spanish Grand Prix (Jun 25-27, 2025)</option>
+                                    <option value="austria">Austrian Grand Prix (Jul 2-4, 2025)</option>
+                                    <option value="britain">British Grand Prix (Jul 16-18, 2025)</option>
+                                    <option value="hungary">Hungarian Grand Prix (Jul 30-Aug 1, 2025)</option>
+                                    <option value="belgium">Belgian Grand Prix (Aug 27-29, 2025)</option>
+                                    <option value="netherlands">Dutch Grand Prix (Sep 3-5, 2025)</option>
+                                    <option value="italy">Italian Grand Prix (Sep 10-12, 2025)</option>
+                                    <option value="azerbaijan">Azerbaijan Grand Prix (Sep 24-26, 2025)</option>
+                                    <option value="singapore">Singapore Grand Prix (Oct 1-3, 2025)</option>
+                                    <option value="usa">United States Grand Prix (Oct 22-24, 2025)</option>
+                                    <option value="mexico">Mexican Grand Prix (Oct 29-31, 2025)</option>
+                                    <option value="brazil">Brazilian Grand Prix (Nov 5-7, 2025)</option>
+                                    <option value="qatar">Qatar Grand Prix (Nov 19-21, 2025)</option>
+                                    <option value="abudhabi">Abu Dhabi Grand Prix (Dec 3-5, 2025)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="seats">Seating Option</label>
+                                <select id="seats" name="seats" class="form-control" required>
+                                    <option value="" disabled selected>Select seating type</option>
+                                    <option value="vip">VIP Experience</option>
+                                    <option value="track">Track Seats</option>
+                                    <option value="normal">Normal Seating</option>
+                                    <option value="handicapped">Handicapped Accessible</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="agency">Booking Agency</label>
+                                <select id="agency" name="agency" class="form-control" required>
+                                    <option value="" disabled selected>Select your preferred agency</option>
+                                    <option value="f1official">F1 Official</option>
+                                    <option value="grandprixevents">Grand Prix Events</option>
+                                    <option value="f1experiences">F1 Experiences</option>
+                                    <option value="gootickets">Gootickets</option>
+                                    <option value="bookmyshow">BookMyShow</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="comments">Additional Comments</label>
+                                <textarea id="comments" name="comments" class="form-control" rows="4"></textarea>
+                            </div>
+                            
+                            <button type="submit" class="submit-btn">Request Tickets</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-column">
+                        <h3>F1 Analysis</h3>
+                        <p>Your comprehensive platform for Formula 1 data analysis, statistics, and insights.</p>
+                        <div class="social-links">
+                            <a href="#" class="social-link">f</a>
+                            <a href="#" class="social-link">t</a>
+                            <a href="#" class="social-link">in</a>
+                            <a href="#" class="social-link">ig</a>
+                        </div>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul class="footer-links">
+                            <li><a href="About F1.html">About F1</a></li>
+                            <li><a href="drivers.html">Drivers</a></li>
+                            <li><a href="Schedule.html">Schedule</a></li>
+                            <li><a href="results.html">Results</a></li>
+                            <li><a href="tickets.html">Tickets</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Support</h3>
+                        <ul class="footer-links">
+                            <li><a href="#">Help Center</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">FAQs</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Newsletter</h3>
+                        <p>Subscribe to our newsletter for the latest F1 news and analysis.</p>
+                        <form class="newsletter-form">
+                            <input type="email" placeholder="Your email" class="newsletter-input">
+                            <button type="submit" class="newsletter-btn">→</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2025 F1 Analysis. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+</body>
+</html>

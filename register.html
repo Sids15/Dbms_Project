@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 Registration Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Video Background Styles */
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .video-background video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+
+        /* Overlay to ensure text is readable */
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            z-index: -1;
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 4s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .register-container {
+            background-color: white;
+            width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            animation: fadeIn 1s ease-out;
+            z-index: 1;
+        }
+
+        .register-header {
+            height: 160px;
+            background: linear-gradient(to right, #e10600, #8b0000);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .red-line {
+            width: 100%;
+            height: 5px;
+            background-color: #e10600; /* F1 red */
+        }
+
+        .register-form {
+            padding: 30px;
+        }
+
+        .form-title {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 24px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: none;
+            background-color: #ffeeee;
+            border-radius: 50px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus {
+            box-shadow: 0 0 0 2px #e10600;
+        }
+
+        .register-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #e10600;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .register-btn:hover {
+            background-color: #8b0000;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(225, 6, 0, 0.4);
+        }
+
+        .register-btn:active {
+            transform: translateY(0);
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .login-link a {
+            color: #e10600;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Animations for input fields */
+        .input-animation {
+            animation: slideIn 0.5s ease-out both;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Adding animation delay for staggered effect */
+        .input-group:nth-child(1) { animation-delay: 0.2s; }
+        .input-group:nth-child(2) { animation-delay: 0.4s; }
+        .input-group:nth-child(3) { animation-delay: 0.6s; }
+        .input-group:nth-child(4) { animation-delay: 0.8s; }
+        .register-btn { animation: fadeIn 0.5s ease-out 1s both; }
+        .login-link { animation: fadeIn 0.5s ease-out 1.2s both; }
+    </style>
+</head>
+<body>
+    <!-- Video Background -->
+    <div class="video-background">
+        <video autoplay muted loop>
+            <source src="landingpagevid.mp4" type="video/mp4">
+            <!-- Add fallback content if needed -->
+            Your browser does not support the video tag.
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+    
+    <div class="stars" id="stars"></div>
+    
+    <div class="register-container">
+        <div class="register-header">
+            <img src="f1logo2.jpeg" alt="F1 Header" class="header-image">
+        </div>
+        <div class="red-line"></div>
+
+        <div class="register-form">
+            <div class="form-title">Register</div>
+            <form action="/register" method="POST">
+                <div class="input-group input-animation">
+                    
+                    <input type="text" id="username" name="username" required placeholder="Username">
+                </div>
+                
+                <div class="input-group input-animation">
+                    
+                    <input type="email" id="email" name="email" required placeholder="Email">
+                </div>
+                
+                <div class="input-group input-animation">
+                    
+                    <input type="password" id="password" name="password" required placeholder="Password">
+                </div>
+                
+                <div class="input-group input-animation">
+                    
+                    <input type="password" id="confirm_password" name="confirm_password" required placeholder="Confirm Password">
+                </div>
+                
+                <button type="submit" class="register-btn">Register</button>
+                
+                <div class="login-link">
+                    <span>Already have an account? </span>
+                    <a href="/login">Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        
+        
+        // Call function when page loads
+        window.onload = createStars;
+
+        // Add interactive effects to form elements
+        const inputs = document.querySelectorAll('input');
+        
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.style.transform = 'scale(1.02)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+
+        const registerBtn = document.querySelector('.register-btn');
+        
+        registerBtn.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-3px)';
+        });
+        
+        registerBtn.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+        });
+        
+    
+    </script>
+</body>
+</html>
